@@ -1,0 +1,60 @@
+{
+  "themeName": "Learnify-NeoBrutalism",
+  "version": "1.0.0",
+  "tokens": {
+    "colors": {
+      "background": "#F7F7F5",
+      "surface": "#FFFFFF",
+      "sidebar": "#151313",
+      "text": {
+        "primary": "#151313",
+        "secondary": "#6B6B6B",
+        "inverse": "#FFFFFF"
+      },
+      "brand": {
+        "primary": "#FF5734",
+        "secondary": "#FCCC42",
+        "tertiary": "#BE94F5",
+        "info": "#B8E3F5"
+      },
+      "border": "#151313"
+    },
+    "borderWidth": {
+      "standard": "2px",
+      "heavy": "3px"
+    },
+    "borderRadius": {
+      "card": "28px",
+      "button": "50px",
+      "input": "12px",
+      "tag": "8px"
+    },
+    "typography": {
+      "fontFamily": "'Kodchassan', sans-serif",
+      "weights": {
+        "regular": 400,
+        "medium": 500,
+        "bold": 700
+      },
+      "sizes": {
+        "h1": "32px",
+        "h2": "24px",
+        "body": "16px",
+        "caption": "14px"
+      }
+    },
+    "shadows": {
+      "flat": "4px 4px 0px #151313"
+    }
+  },
+  "componentSpecific": {
+    "courseCard": {
+      "padding": "24px",
+      "gap": "16px"
+    },
+    "sidebarIcon": {
+      "size": "24px",
+      "activeColor": "#FCCC42"
+    }
+  }
+}

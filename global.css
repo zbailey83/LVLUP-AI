@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #F7F7F5;
+    color: #151313;
+  }
+  
+  * {
+    font-family: 'Kodchasan', sans-serif;
+  }
+}
+
+@layer components {
+  .neo-brutal-card {
+    background-color: white;
+    border: 2px solid #151313;
+    border-radius: 28px;
+    transition: all 0.2s;
+    box-shadow: 4px 4px 0px 0px #151313;
+  }
+
+  .neo-brutal-card:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px #151313;
+  }
+
+  .btn-primary {
+    background-color: #FF5734;
+    color: white;
+    border: 2px solid #151313;
+    border-radius: 50px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 700;
+    transition: all 0.2s;
+    box-shadow: 4px 4px 0px #151313;
+  }
+
+  .btn-primary:hover {
+    background-color: rgba(255, 87, 52, 0.9);
+  }
+
+  .btn-primary:active {
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+
+  .filter-pill {
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    border: 2px solid #151313;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .filter-pill:hover {
+    background-color: #FCCC42;
+  }
+
+  .filter-pill.active {
+    background-color: #FCCC42;
+    box-shadow: 4px 4px 0px 0px #151313;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
