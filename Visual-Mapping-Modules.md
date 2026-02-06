@@ -1,9 +1,3 @@
-This is a perfect content set to plug into the **Learnify** architecture. To make this "agent-ready," I have categorized your modules into the design tokens we established.
-
-Below is the **Data Mapping** and a **Tailwind-ready JSON** file that your coding agent can use to populate the dashboard and course views automatically.
-
----
-
 ## 🎨 Visual Mapping for LVL UP AI ACADEMY
 
 To maintain the Learnify aesthetic, we will map your categories to specific accent colors:

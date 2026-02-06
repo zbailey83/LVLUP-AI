@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import LearningPathsSimple from './LearningPathsSimple';
 import ModuleDashboardSimple from './ModuleDashboardSimple';
+import Module1Content from './Module1Content';
+import Module2Content from './Module2Content';
+import Module3Content from './Module3Content';
 import './global.css';
 
 function App() {
@@ -15,11 +18,24 @@ function App() {
 
   const handleModuleSelect = (module) => {
     setSelectedModule(module);
-    setView('detail');
+    // Check module ID for custom content
+    if (module.id === 1) {
+      setView('module1');
+    } else if (module.id === 2) {
+      setView('module2');
+    } else if (module.id === 3) {
+      setView('module3');
+    } else {
+      setView('detail');
+    }
   };
 
   const handleBackToPaths = () => {
     setView('paths');
+  };
+
+  const handleBackToDashboard = () => {
+    setView('dashboard');
   };
 
   return (
@@ -36,10 +52,22 @@ function App() {
         />
       )}
       
+      {view === 'module1' && (
+        <Module1Content onBack={handleBackToDashboard} />
+      )}
+      
+      {view === 'module2' && (
+        <Module2Content onBack={handleBackToDashboard} />
+      )}
+      
+      {view === 'module3' && (
+        <Module3Content onBack={handleBackToDashboard} />
+      )}
+      
       {view === 'detail' && selectedModule && (
         <div className="min-h-screen bg-brand-offwhite p-8">
           <button 
-            onClick={() => setView('dashboard')}
+            onClick={handleBackToDashboard}
             className="mb-6 px-6 py-2 bg-white border-2 border-brand-black rounded-full font-bold hover:bg-brand-yellow"
           >
             ← Back to Modules
@@ -76,6 +104,11 @@ function App() {
                 </div>
               </div>
             )}
+            
+            <div className="bg-brand-orange/10 border-2 border-brand-black rounded-xl p-6 mb-6">
+              <p className="text-sm text-gray-600 mb-2">📚 Full module content coming soon!</p>
+              <p className="font-medium">This module will include step-by-step guides, video tutorials, and interactive exercises.</p>
+            </div>
             
             <button className="w-full bg-brand-orange text-white px-6 py-4 rounded-full font-bold text-lg border-2 border-brand-black hover:shadow-neo transition-all">
               Start Module
