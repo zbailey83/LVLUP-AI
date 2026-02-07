@@ -1,7 +1,3 @@
-Here is the comprehensive guide for **Module 3: AI for Content & Marketing Fundamentals**, tailored for the LVL UP AI ACADEMY.
-
----
-
 # **MODULE 3: AI FOR CONTENT & MARKETING FUNDAMENTALS**
 
 **"The Infinite Content Engine"**
