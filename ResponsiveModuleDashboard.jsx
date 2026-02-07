@@ -4,6 +4,14 @@ import ModuleCard from './ModuleCard';
 import { Search, Bell, Menu, X, Filter } from 'lucide-react';
 import modulesData from './modules.json';
 
+import contentMachineIcon from './assets/content-machine.svg';
+import salesAutomatorIcon from './assets/sales-automator.svg';
+import customerServiceIcon from './assets/customer-service.svg';
+import marketingMultiplierIcon from './assets/marketing-multiplier.svg';
+import dataDrivenIcon from './assets/Data-driven.svg';
+import efficiencyExpertIcon from './assets/Efficiency-Expert.svg';
+import toucanIcon from './assets/toucan-svgrepo-com.svg';
+
 const ResponsiveModuleDashboard = ({ onModuleSelect }) => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,14 +20,22 @@ const ResponsiveModuleDashboard = ({ onModuleSelect }) => {
 
   const categories = ['All', 'Core Track', 'Marketing', 'Sales', 'Support', 'Data', 'Strategy'];
 
+  const categoryConfig = {
+    'All': { icon: toucanIcon, color: 'bg-white', textColor: 'text-brand-black' },
+    'Core Track': { icon: contentMachineIcon, color: 'bg-brand-orange', textColor: 'text-white' },
+    'Marketing': { icon: marketingMultiplierIcon, color: 'bg-brand-purple', textColor: 'text-brand-black' },
+    'Sales': { icon: salesAutomatorIcon, color: 'bg-brand-yellow', textColor: 'text-brand-black' },
+    'Support': { icon: customerServiceIcon, color: 'bg-brand-blue', textColor: 'text-brand-black' },
+    'Data': { icon: dataDrivenIcon, color: 'bg-brand-black', textColor: 'text-white' },
+    'Strategy': { icon: efficiencyExpertIcon, color: 'bg-gray-200', textColor: 'text-brand-black' }
+  };
+
   const filteredModules = modulesData.filter(module => {
     const matchesCategory = activeFilter === 'All' || module.category === activeFilter;
     const matchesSearch = module.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          module.outcome.toLowerCase().includes(searchQuery.toLowerCase());
+      module.outcome.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
-
-  const coreTrackModules = modulesData.filter(m => m.category === 'Core Track');
 
   return (
     <div className="flex min-h-screen bg-brand-offwhite font-kodchassan overflow-x-hidden">
@@ -29,7 +45,7 @@ const ResponsiveModuleDashboard = ({ onModuleSelect }) => {
 
       <main className="flex-1 w-full lg:ml-20 p-4 md:p-8">
         <header className="flex justify-between items-center mb-6 lg:mb-10">
-          <button 
+          <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="lg:hidden p-2 bg-white border-2 border-brand-black rounded-xl"
           >
@@ -38,22 +54,22 @@ const ResponsiveModuleDashboard = ({ onModuleSelect }) => {
 
           <div className="hidden md:block relative w-1/3">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input 
-              type="text" 
-              placeholder="Search modules..." 
+            <input
+              type="text"
+              placeholder="Search modules..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-2.5 rounded-full border-2 border-brand-black bg-white focus:outline-none"
             />
           </div>
-          
+
           <div className="flex items-center gap-3">
             <div className="hidden sm:block p-2 bg-white border-2 border-brand-black rounded-full cursor-pointer hover:bg-brand-yellow transition-colors">
               <Bell className="w-5 h-5" />
             </div>
-            <img 
-              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" 
-              alt="Profile" 
+            <img
+              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+              alt="Profile"
               className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-brand-black shadow-neo"
             />
           </div>
@@ -62,9 +78,9 @@ const ResponsiveModuleDashboard = ({ onModuleSelect }) => {
         <div className="md:hidden mb-4">
           <div className="relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input 
-              type="text" 
-              placeholder="Search..." 
+            <input
+              type="text"
+              placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-2.5 rounded-full border-2 border-brand-black bg-white"
@@ -77,25 +93,10 @@ const ResponsiveModuleDashboard = ({ onModuleSelect }) => {
           <p className="text-gray-500 font-medium text-base md:text-lg">Master AI automation for your business</p>
         </section>
 
-        <section className="mb-8">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl md:text-2xl font-bold">Core Linear Track</h2>
-            <span className="text-xs md:text-sm font-bold text-gray-500">Start here →</span>
-          </div>
-          
-          <div className="flex gap-4 md:gap-6 overflow-x-auto pb-4 no-scrollbar">
-            {coreTrackModules.map(module => (
-              <div key={module.id} className="min-w-[280px] md:min-w-[350px]">
-                <ModuleCard module={module} onClick={() => onModuleSelect(module)} />
-              </div>
-            ))}
-          </div>
-        </section>
-
         <section className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl md:text-2xl font-bold">All Modules</h2>
-            <button 
+            <button
               onClick={() => setShowFilters(!showFilters)}
               className="md:hidden flex items-center gap-2 px-4 py-2 bg-white border-2 border-brand-black rounded-full font-bold"
             >
@@ -106,14 +107,17 @@ const ResponsiveModuleDashboard = ({ onModuleSelect }) => {
 
           <div className={`${showFilters ? 'block' : 'hidden'} md:flex gap-3 overflow-x-auto pb-4 no-scrollbar`}>
             {categories.map(cat => (
-              <button 
+              <button
                 key={cat}
                 onClick={() => {
                   setActiveFilter(cat);
                   setShowFilters(false);
                 }}
-                className={`filter-pill ${activeFilter === cat ? 'active' : ''} w-full md:w-auto mb-2 md:mb-0`}
+                className={`flex items-center gap-2 px-6 py-3 rounded-full border-2 border-brand-black font-bold transition-all w-full md:w-auto mb-2 md:mb-0 ${categoryConfig[cat]?.color || 'bg-white'
+                  } ${categoryConfig[cat]?.textColor || 'text-brand-black'} ${activeFilter === cat ? 'shadow-none translate-y-1' : 'shadow-neo hover:opacity-80'
+                  }`}
               >
+                <img src={categoryConfig[cat]?.icon} alt={cat} className="w-5 h-5" />
                 {cat}
               </button>
             ))}
@@ -157,8 +161,8 @@ const ResponsiveModuleDashboard = ({ onModuleSelect }) => {
       </main>
 
       {isMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden" 
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           onClick={() => setIsMenuOpen(false)}
         />
       )}
@@ -167,7 +171,7 @@ const ResponsiveModuleDashboard = ({ onModuleSelect }) => {
 };
 
 const QuickWinRow = ({ module, onClick }) => (
-  <div 
+  <div
     onClick={onClick}
     className="flex items-center justify-between p-3 md:p-4 rounded-2xl border-2 border-brand-black hover:bg-gray-50 transition-colors cursor-pointer"
   >
@@ -190,7 +194,7 @@ const ProgressStat = ({ category, completed, total, color }) => (
       <span>{completed}/{total}</span>
     </div>
     <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden border border-white/20">
-      <div 
+      <div
         className={`${color} h-full transition-all duration-500`}
         style={{ width: `${(completed / total) * 100}%` }}
       />

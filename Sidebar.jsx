@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { 
-  LayoutGrid, 
-  PlayCircle, 
-  MessageSquare, 
-  Users, 
-  Settings, 
-  LogOut 
+import {
+  LayoutGrid,
+  PlayCircle,
+  MessageSquare,
+  Users,
+  Settings,
+  LogOut
 } from 'lucide-react';
 
+import toucanIcon from './assets/toucan-svgrepo-com.svg';
+
 const SidebarItem = ({ icon: Icon, active, onClick }) => (
-  <div 
+  <div
     onClick={onClick}
     className="relative flex items-center justify-center w-full py-4 cursor-pointer group"
   >
@@ -18,7 +20,7 @@ const SidebarItem = ({ icon: Icon, active, onClick }) => (
       absolute w-12 h-12 rounded-2xl transition-all duration-300
       ${active ? 'bg-brand-yellow scale-100' : 'bg-transparent scale-0 group-hover:scale-90 group-hover:bg-white/10'}
     `} />
-    
+
     {/* Icon */}
     <Icon className={`
       relative z-10 w-6 h-6 transition-colors duration-300
@@ -43,14 +45,14 @@ const Sidebar = () => {
       {/* Logo Area */}
       <div className="mb-10">
         <div className="w-10 h-10 bg-brand-orange rounded-xl flex items-center justify-center border-2 border-white shadow-[2px_2px_0px_white]">
-          <span className="text-white font-bold text-xl">L</span>
+          <img src={toucanIcon} alt="LVL UP Logo" className="w-6 h-6" />
         </div>
       </div>
 
       {/* Nav Items */}
       <nav className="flex flex-col gap-4 w-full flex-1">
         {menuItems.map((item) => (
-          <SidebarItem 
+          <SidebarItem
             key={item.id}
             icon={item.icon}
             active={activeTab === item.id}

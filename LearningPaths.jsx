@@ -1,4 +1,9 @@
-import { Target, Megaphone, Headset, TrendingUp, BarChart3, Zap } from 'lucide-react';
+import contentMachineIcon from './assets/content-machine.svg';
+import salesAutomatorIcon from './assets/sales-automator.svg';
+import customerServiceIcon from './assets/customer-service.svg';
+import marketingMultiplierIcon from './assets/marketing-multiplier.svg';
+import dataDrivenIcon from './assets/Data-driven.svg';
+import efficiencyExpertIcon from './assets/Efficiency-Expert.svg';
 
 const LearningPaths = ({ onPathSelect }) => {
   const paths = [
@@ -6,7 +11,7 @@ const LearningPaths = ({ onPathSelect }) => {
       id: 'content-machine',
       name: 'The Content Machine',
       description: 'Master content creation and repurposing at scale',
-      icon: Megaphone,
+      icon: contentMachineIcon,
       color: 'bg-brand-purple',
       textColor: 'text-brand-black',
       modules: [1, 2, 3, 6, 7, 9, 10],
@@ -17,7 +22,7 @@ const LearningPaths = ({ onPathSelect }) => {
       id: 'sales-automator',
       name: 'The Sales Automator',
       description: 'Automate your entire sales pipeline with AI',
-      icon: Target,
+      icon: salesAutomatorIcon,
       color: 'bg-brand-yellow',
       textColor: 'text-brand-black',
       modules: [1, 2, 4, 13, 14, 15, 16, 17, 18],
@@ -28,7 +33,7 @@ const LearningPaths = ({ onPathSelect }) => {
       id: 'customer-service',
       name: 'Customer Service Transformer',
       description: '24/7 AI-powered support that scales infinitely',
-      icon: Headset,
+      icon: customerServiceIcon,
       color: 'bg-brand-blue',
       textColor: 'text-brand-black',
       modules: [1, 2, 20, 21, 22, 23, 24, 25],
@@ -39,7 +44,7 @@ const LearningPaths = ({ onPathSelect }) => {
       id: 'marketing-multiplier',
       name: 'The Marketing Multiplier',
       description: 'End-to-end marketing automation framework',
-      icon: TrendingUp,
+      icon: marketingMultiplierIcon,
       color: 'bg-brand-orange',
       textColor: 'text-white',
       modules: [1, 2, 3, 5, 6, 7, 8, 11, 12],
@@ -50,7 +55,7 @@ const LearningPaths = ({ onPathSelect }) => {
       id: 'data-driven',
       name: 'The Data-Driven Leader',
       description: 'Make decisions backed by AI-powered insights',
-      icon: BarChart3,
+      icon: dataDrivenIcon,
       color: 'bg-brand-black',
       textColor: 'text-white',
       modules: [1, 2, 26, 27, 28, 29, 30, 33],
@@ -61,7 +66,7 @@ const LearningPaths = ({ onPathSelect }) => {
       id: 'efficiency-expert',
       name: 'The Efficiency Expert',
       description: 'Optimize every process in your business',
-      icon: Zap,
+      icon: efficiencyExpertIcon,
       color: 'bg-gray-200',
       textColor: 'text-brand-black',
       modules: [1, 2, 4, 6, 14, 15, 30, 31, 32, 33],
@@ -82,7 +87,6 @@ const LearningPaths = ({ onPathSelect }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {paths.map(path => {
-            const Icon = path.icon;
             return (
               <div
                 key={path.id}
@@ -90,10 +94,9 @@ const LearningPaths = ({ onPathSelect }) => {
                 className={`neo-brutal-card p-6 ${path.color} ${path.textColor} cursor-pointer group`}
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className={`p-3 rounded-xl border-2 border-brand-black ${
-                    path.textColor === 'text-white' ? 'bg-white/20' : 'bg-brand-black/10'
-                  }`}>
-                    <Icon className="w-8 h-8" />
+                  <div className={`p-3 rounded-xl border-2 border-brand-black ${path.textColor === 'text-white' ? 'bg-white/20' : 'bg-brand-black/10'
+                    }`}>
+                    <img src={path.icon} alt={`${path.name} icon`} className="w-8 h-8" />
                   </div>
                   <span className="text-xs font-bold px-3 py-1 rounded-full bg-brand-black text-white">
                     {path.modules.length} modules
@@ -123,7 +126,7 @@ const LearningPaths = ({ onPathSelect }) => {
         </div>
 
         <div className="text-center mt-12">
-          <button 
+          <button
             onClick={() => onPathSelect(null)}
             className="text-brand-black font-bold underline hover:no-underline"
           >

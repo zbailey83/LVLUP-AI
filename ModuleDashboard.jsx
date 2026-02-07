@@ -4,20 +4,36 @@ import ModuleCard from './ModuleCard';
 import { Search, Bell, ChevronRight } from 'lucide-react';
 import modulesData from './modules.json';
 
+import contentMachineIcon from './assets/content-machine.svg';
+import salesAutomatorIcon from './assets/sales-automator.svg';
+import customerServiceIcon from './assets/customer-service.svg';
+import marketingMultiplierIcon from './assets/marketing-multiplier.svg';
+import dataDrivenIcon from './assets/Data-driven.svg';
+import efficiencyExpertIcon from './assets/Efficiency-Expert.svg';
+import toucanIcon from './assets/toucan-svgrepo-com.svg';
+
 const ModuleDashboard = ({ onModuleSelect }) => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
   const categories = ['All', 'Core Track', 'Marketing', 'Sales', 'Support', 'Data', 'Strategy'];
 
+  const categoryConfig = {
+    'All': { icon: toucanIcon, color: 'bg-white', textColor: 'text-brand-black' },
+    'Core Track': { icon: contentMachineIcon, color: 'bg-brand-orange', textColor: 'text-white' },
+    'Marketing': { icon: marketingMultiplierIcon, color: 'bg-brand-purple', textColor: 'text-brand-black' },
+    'Sales': { icon: salesAutomatorIcon, color: 'bg-brand-yellow', textColor: 'text-brand-black' },
+    'Support': { icon: customerServiceIcon, color: 'bg-brand-blue', textColor: 'text-brand-black' },
+    'Data': { icon: dataDrivenIcon, color: 'bg-brand-black', textColor: 'text-white' },
+    'Strategy': { icon: efficiencyExpertIcon, color: 'bg-gray-200', textColor: 'text-brand-black' }
+  };
+
   const filteredModules = modulesData.filter(module => {
     const matchesCategory = activeFilter === 'All' || module.category === activeFilter;
     const matchesSearch = module.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          module.outcome.toLowerCase().includes(searchQuery.toLowerCase());
+      module.outcome.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
-
-  const coreTrackModules = modulesData.filter(m => m.category === 'Core Track');
 
   return (
     <div className="flex min-h-screen bg-brand-offwhite font-kodchassan">
@@ -27,22 +43,22 @@ const ModuleDashboard = ({ onModuleSelect }) => {
         <header className="flex justify-between items-center mb-10">
           <div className="relative w-1/3">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input 
-              type="text" 
-              placeholder="Search modules..." 
+            <input
+              type="text"
+              placeholder="Search modules..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-3 rounded-full border-2 border-brand-black bg-white focus:outline-none focus:shadow-neo transition-all"
             />
           </div>
-          
+
           <div className="flex items-center gap-4">
             <div className="p-2 bg-white border-2 border-brand-black rounded-full cursor-pointer hover:bg-brand-yellow transition-colors">
               <Bell className="w-5 h-5" />
             </div>
-            <img 
-              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" 
-              alt="Profile" 
+            <img
+              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+              alt="Profile"
               className="w-12 h-12 rounded-full border-2 border-brand-black shadow-neo"
             />
           </div>
@@ -53,29 +69,17 @@ const ModuleDashboard = ({ onModuleSelect }) => {
           <p className="text-gray-500 font-medium text-lg">Master AI automation for your business</p>
         </section>
 
-        <section className="mb-10">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">Core Linear Track</h2>
-            <span className="text-sm font-bold text-gray-500">Start here →</span>
-          </div>
-          
-          <div className="flex gap-6 overflow-x-auto pb-4 no-scrollbar">
-            {coreTrackModules.map(module => (
-              <div key={module.id} className="min-w-[350px]">
-                <ModuleCard module={module} onClick={() => onModuleSelect(module)} />
-              </div>
-            ))}
-          </div>
-        </section>
-
         <section className="mb-6">
           <div className="flex gap-3 overflow-x-auto pb-4 no-scrollbar">
             {categories.map(cat => (
-              <button 
+              <button
                 key={cat}
                 onClick={() => setActiveFilter(cat)}
-                className={`filter-pill ${activeFilter === cat ? 'active' : ''}`}
+                className={`flex items-center gap-2 px-6 py-3 rounded-full border-2 border-brand-black font-bold transition-all ${categoryConfig[cat]?.color || 'bg-white'
+                  } ${categoryConfig[cat]?.textColor || 'text-brand-black'} ${activeFilter === cat ? 'shadow-none translate-y-1' : 'shadow-neo hover:opacity-80'
+                  }`}
               >
+                <img src={categoryConfig[cat]?.icon} alt={cat} className="w-5 h-5" />
                 {cat}
               </button>
             ))}
@@ -102,7 +106,7 @@ const ModuleDashboard = ({ onModuleSelect }) => {
                 See all <ChevronRight className="w-4 h-4" />
               </button>
             </div>
-            
+
             <div className="space-y-4">
               {modulesData.filter(m => m.time.includes('1-2h') || m.time.includes('2-3h')).slice(0, 5).map((module) => (
                 <QuickWinRow key={module.id} module={module} />
@@ -149,7 +153,7 @@ const ProgressStat = ({ category, completed, total, color }) => (
       <span>{completed}/{total}</span>
     </div>
     <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden border border-white/20">
-      <div 
+      <div
         className={`${color} h-full transition-all duration-500`}
         style={{ width: `${(completed / total) * 100}%` }}
       />
