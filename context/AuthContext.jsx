@@ -15,7 +15,14 @@ export const AuthProvider = ({ children }) => {
         const getSession = async () => {
             const { data: { session }, error } = await insforge.auth.getCurrentSession();
             setSession(session);
-            setUser(session?.user ?? null);
+
+            // Map user_metadata to profile if profile is missing
+            const authUser = session?.user;
+            if (authUser && !authUser.profile && authUser.user_metadata) {
+                authUser.profile = authUser.user_metadata;
+            }
+
+            setUser(authUser ?? null);
             setLoading(false);
         };
 
@@ -31,6 +38,18 @@ export const AuthProvider = ({ children }) => {
             password,
             name,
         });
+
+        if (data?.session) {
+            setSession(data.session);
+
+            // Map user_metadata to profile if profile is missing
+            const authUser = data.session.user;
+            if (authUser && !authUser.profile && authUser.user_metadata) {
+                authUser.profile = authUser.user_metadata;
+            }
+            setUser(authUser);
+        }
+
         return { data, error };
     };
 
@@ -42,7 +61,13 @@ export const AuthProvider = ({ children }) => {
 
         if (data?.session) {
             setSession(data.session);
-            setUser(data.session.user);
+
+            // Map user_metadata to profile if profile is missing
+            const authUser = data.session.user;
+            if (authUser && !authUser.profile && authUser.user_metadata) {
+                authUser.profile = authUser.user_metadata;
+            }
+            setUser(authUser);
         }
         return { data, error };
     };
@@ -63,7 +88,7 @@ export const AuthProvider = ({ children }) => {
             setUser(prev => ({
                 ...prev,
                 profile: {
-                    ...prev.profile,
+                    ...(prev?.profile || {}), // Handle case where profile is initially null
                     ...updates
                 }
             }));
@@ -71,11 +96,26 @@ export const AuthProvider = ({ children }) => {
         return { data, error };
     };
 
+    const updateProgress = async (moduleId, score) => {
+        // Get current progress or init empty object
+        const currentProgress = user?.profile?.progress || {};
+
+        // Merge updates
+        const updatedProgress = {
+            ...currentProgress,
+            [moduleId]: score
+        };
+
+        // Save via updateProfile
+        return await updateProfile({ progress: updatedProgress });
+    };
+
     const value = {
         signUp,
         signIn,
         signOut,
         updateProfile,
+        updateProgress,
         user,
         session,
         loading

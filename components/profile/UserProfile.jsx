@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import AvatarUpload from './AvatarUpload';
+import ProgressTracker from './ProgressTracker';
 
 export default function UserProfile({ onBack }) {
     const { user, updateProfile } = useAuth();
@@ -38,6 +40,12 @@ export default function UserProfile({ onBack }) {
         setLoading(false);
     };
 
+    const handleAvatarUpload = (url) => {
+        setAvatarUrl(url);
+        // We could auto-save here, but let's let the user verify first
+        setMessage({ type: 'success', text: 'Image uploaded! Click "Save Changes" to keep it.' });
+    };
+
     return (
         <div className="min-h-screen bg-brand-offwhite p-8 font-kodchassan">
             <button
@@ -48,15 +56,12 @@ export default function UserProfile({ onBack }) {
             </button>
 
             <div className="max-w-2xl mx-auto bg-white border-3 border-brand-black rounded-card p-8 shadow-neo">
-                <div className="flex items-center gap-6 mb-8">
-                    <div className="w-24 h-24 rounded-full border-2 border-brand-black overflow-hidden bg-gray-100 flex-shrink-0">
-                        {avatarUrl ? (
-                            <img src={avatarUrl} alt="Profile" className="w-full h-full object-cover" />
-                        ) : (
-                            <div className="w-full h-full flex items-center justify-center text-4xl text-gray-300">?</div>
-                        )}
-                    </div>
-                    <div>
+                <div className="flex flex-col items-center gap-6 mb-8">
+                    <AvatarUpload
+                        currentAvatarUrl={avatarUrl}
+                        onUploadSuccess={handleAvatarUpload}
+                    />
+                    <div className="text-center">
                         <h1 className="text-3xl font-bold">{user?.email}</h1>
                         <p className="text-gray-500">Member since {new Date(user?.created_at).toLocaleDateString()}</p>
                     </div>
@@ -80,16 +85,7 @@ export default function UserProfile({ onBack }) {
                         />
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-bold mb-2">Avatar URL</label>
-                        <input
-                            type="url"
-                            value={avatarUrl}
-                            onChange={(e) => setAvatarUrl(e.target.value)}
-                            className="w-full p-3 border-2 border-brand-black rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-purple"
-                            placeholder="https://..."
-                        />
-                    </div>
+
 
                     <div>
                         <label className="block text-sm font-bold mb-2">Bio</label>
@@ -111,6 +107,8 @@ export default function UserProfile({ onBack }) {
                         </button>
                     </div>
                 </form>
+
+                <ProgressTracker progress={user?.profile?.progress} />
             </div>
         </div>
     );

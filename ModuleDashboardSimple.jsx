@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ModuleCard from './ModuleCard';
 import modulesData from './modules.json';
 
@@ -10,34 +10,55 @@ import dataDrivenIcon from './assets/Data-driven.svg';
 import efficiencyExpertIcon from './assets/Efficiency-Expert.svg';
 import toucanIcon from './assets/toucan-svgrepo-com.svg';
 
-const ModuleDashboardSimple = ({ onModuleSelect, selectedPath, onBackToPaths }) => {
-  const [activeFilter, setActiveFilter] = useState('All');
+import UserBadge from './components/ui/UserBadge';
+
+const ModuleDashboardSimple = ({ onModuleSelect, selectedPath, onBackToPaths, user, onProfileClick }) => {
+  // Map selectedPath ID to Category Name if applicable
+  const getInitialFilter = () => {
+    if (!selectedPath) return 'All';
+    // Mapping path IDs to categories
+    const pathMap = {
+      'content-machine': 'Core Track',
+      'sales-automator': 'Sales',
+      'customer-service': 'Support',
+      'marketing-multiplier': 'Marketing',
+      'data-driven': 'Data',
+      'efficiency-expert': 'Strategy'
+    };
+    return pathMap[selectedPath.id] || 'All';
+  };
+
+  const [activeFilter, setActiveFilter] = useState(getInitialFilter());
   const [searchQuery, setSearchQuery] = useState('');
 
-  const categories = ['All', 'Core Track', 'Marketing', 'Sales', 'Support', 'Data', 'Strategy'];
+  // Update filter when selectedPath changes
+  useEffect(() => {
+    setActiveFilter(getInitialFilter());
+  }, [selectedPath]);
+
+  const categories = ['All', 'Core Track', 'Sales', 'Support', 'Marketing', 'Data', 'Strategy'];
 
   const categoryConfig = {
     'All': { icon: toucanIcon, color: 'bg-white', textColor: 'text-brand-black' },
-    'Core Track': { icon: contentMachineIcon, color: 'bg-brand-orange', textColor: 'text-white' },
-    'Marketing': { icon: marketingMultiplierIcon, color: 'bg-brand-purple', textColor: 'text-brand-black' },
+    'Core Track': { icon: contentMachineIcon, color: 'bg-brand-purple', textColor: 'text-white' },
     'Sales': { icon: salesAutomatorIcon, color: 'bg-brand-yellow', textColor: 'text-brand-black' },
-    'Support': { icon: customerServiceIcon, color: 'bg-brand-blue', textColor: 'text-brand-black' },
+    'Support': { icon: customerServiceIcon, color: 'bg-brand-blue', textColor: 'text-white' },
+    'Marketing': { icon: marketingMultiplierIcon, color: 'bg-brand-orange', textColor: 'text-white' },
     'Data': { icon: dataDrivenIcon, color: 'bg-brand-black', textColor: 'text-white' },
-    'Strategy': { icon: efficiencyExpertIcon, color: 'bg-gray-200', textColor: 'text-brand-black' }
+    'Strategy': { icon: efficiencyExpertIcon, color: 'bg-gray-200', textColor: 'text-brand-black' },
   };
 
-  const filteredModules = modulesData.filter(module => {
-    const matchesCategory = activeFilter === 'All' || module.category === activeFilter;
-    const matchesSearch = module.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      module.outcome.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+  const filteredModules = modulesData.filter(m => {
+    const matchesSearch = m.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = activeFilter === 'All' || m.category === activeFilter;
+    return matchesSearch && matchesCategory;
   });
 
   return (
-    <div className="min-h-screen bg-brand-offwhite p-8">
+    <div className="min-h-screen bg-brand-offwhite p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        <header className="flex justify-between items-center mb-10">
-          <div className="relative w-1/3">
+        <header className="flex flex-col-reverse md:flex-row justify-between items-center mb-6 md:mb-10 gap-4">
+          <div className="relative w-full md:w-1/3">
             <input
               type="text"
               placeholder="Search modules..."
@@ -47,12 +68,15 @@ const ModuleDashboardSimple = ({ onModuleSelect, selectedPath, onBackToPaths }) 
             />
           </div>
 
-          <button
-            onClick={onBackToPaths}
-            className="px-6 py-2 bg-white border-2 border-brand-black rounded-full font-bold hover:bg-brand-yellow transition-colors"
-          >
-            ← Back to Paths
-          </button>
+          <div className="flex justify-between w-full md:w-auto gap-4">
+            <button
+              onClick={onBackToPaths}
+              className="px-6 py-2 bg-white border-2 border-brand-black rounded-full font-bold hover:bg-brand-yellow transition-colors whitespace-nowrap text-sm md:text-base"
+            >
+              ← <span className="hidden md:inline">Back to Paths</span><span className="md:hidden">Back</span>
+            </button>
+            <UserBadge user={user} onClick={onProfileClick} />
+          </div>
         </header>
 
         <section className="mb-10">

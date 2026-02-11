@@ -1,3 +1,4 @@
+import UserBadge from './components/ui/UserBadge';
 import contentMachineIcon from './assets/content-machine.svg';
 import salesAutomatorIcon from './assets/sales-automator.svg';
 import customerServiceIcon from './assets/customer-service.svg';
@@ -5,7 +6,7 @@ import marketingMultiplierIcon from './assets/marketing-multiplier.svg';
 import dataDrivenIcon from './assets/Data-driven.svg';
 import efficiencyExpertIcon from './assets/Efficiency-Expert.svg';
 
-const LearningPathsSimple = ({ onPathSelect }) => {
+const LearningPathsSimple = ({ onPathSelect, user, onProfileClick }) => {
   const paths = [
     {
       id: 'content-machine',
@@ -70,8 +71,13 @@ const LearningPathsSimple = ({ onPathSelect }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-brand-offwhite p-8">
+    <div className="min-h-screen bg-brand-offwhite p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
+        {/* Header with User Badge */}
+        <header className="flex justify-end mb-8">
+          <UserBadge user={user} onClick={onProfileClick} />
+        </header>
+
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold mb-4">Choose Your Learning Path 🎯</h1>
           <p className="text-xl text-gray-600 font-medium">

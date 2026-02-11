@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import Logo from '../ui/Logo';
 
 export default function LoginForm({ onLoginSuccess, onSwitchToSignup }) {
     const { signIn } = useAuth();
@@ -27,6 +28,9 @@ export default function LoginForm({ onLoginSuccess, onSwitchToSignup }) {
     return (
         <div className="flex min-h-screen items-center justify-center bg-brand-offwhite p-4 font-kodchassan">
             <div className="w-full max-w-md bg-white border-3 border-brand-black rounded-card p-8 shadow-neo">
+                <div className="flex justify-center mb-6">
+                    <Logo />
+                </div>
                 <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
 
                 {error && (

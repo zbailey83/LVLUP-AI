@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import Logo from '../ui/Logo';
 
 export default function SignupForm({ onSignupSuccess, onSwitchToLogin }) {
     const { signUp } = useAuth();
@@ -35,6 +36,9 @@ export default function SignupForm({ onSignupSuccess, onSwitchToLogin }) {
         return (
             <div className="flex min-h-screen items-center justify-center bg-brand-offwhite p-4 font-kodchassan">
                 <div className="w-full max-w-md bg-white border-3 border-brand-black rounded-card p-8 shadow-neo text-center">
+                    <div className="flex justify-center mb-6">
+                        <Logo />
+                    </div>
                     <h2 className="text-2xl font-bold mb-4">Check your email</h2>
                     <p className="mb-6">We sent a verification link to <strong>{email}</strong>.</p>
                     <button
@@ -51,6 +55,9 @@ export default function SignupForm({ onSignupSuccess, onSwitchToLogin }) {
     return (
         <div className="flex min-h-screen items-center justify-center bg-brand-offwhite p-4 font-kodchassan">
             <div className="w-full max-w-md bg-white border-3 border-brand-black rounded-card p-8 shadow-neo">
+                <div className="flex justify-center mb-6">
+                    <Logo />
+                </div>
                 <h2 className="text-3xl font-bold mb-6 text-center">Sign Up</h2>
 
                 {error && (
