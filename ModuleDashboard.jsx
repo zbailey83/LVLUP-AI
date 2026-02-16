@@ -12,7 +12,10 @@ import dataDrivenIcon from './assets/Data-driven.svg';
 import efficiencyExpertIcon from './assets/Efficiency-Expert.svg';
 import toucanIcon from './assets/toucan-svgrepo-com.svg';
 
+import { useAuth } from './context/AuthContext';
+
 const ModuleDashboard = ({ onModuleSelect }) => {
+  const { user } = useAuth();
   const [activeFilter, setActiveFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -34,6 +37,21 @@ const ModuleDashboard = ({ onModuleSelect }) => {
       module.outcome.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  // Calculate progress per category
+  const getCategoryProgress = (category) => {
+    const categoryModules = modulesData.filter(m => m.category === category);
+    if (categoryModules.length === 0) return { completed: 0, total: 0 };
+
+    const completedCount = categoryModules.filter(m => {
+      // Check if module is marked as complete in user profile
+      // We look for the 'main' lesson completion or just check if the module object exists and has some completion logic
+      // For now, let's assume if 'main' lesson is complete, the module is complete.
+      return user?.profile?.progress?.[m.id]?.main?.completed;
+    }).length;
+
+    return { completed: completedCount, total: categoryModules.length };
+  };
 
   return (
     <div className="flex min-h-screen bg-brand-offwhite font-kodchassan">
@@ -57,9 +75,9 @@ const ModuleDashboard = ({ onModuleSelect }) => {
               <Bell className="w-5 h-5" />
             </div>
             <img
-              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+              src={user?.profile?.avatar_url || "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"}
               alt="Profile"
-              className="w-12 h-12 rounded-full border-2 border-brand-black shadow-neo"
+              className="w-12 h-12 rounded-full border-2 border-brand-black shadow-neo object-cover"
             />
           </div>
         </header>
@@ -117,12 +135,12 @@ const ModuleDashboard = ({ onModuleSelect }) => {
           <div className="col-span-12 lg:col-span-4 bg-brand-black text-white border-2 border-brand-black rounded-card p-6">
             <h2 className="text-2xl font-bold mb-4">Your Progress</h2>
             <div className="space-y-4">
-              <ProgressStat category="Core Track" completed={0} total={4} color="bg-brand-orange" />
-              <ProgressStat category="Marketing" completed={0} total={8} color="bg-brand-purple" />
-              <ProgressStat category="Sales" completed={0} total={7} color="bg-brand-yellow" />
-              <ProgressStat category="Support" completed={0} total={6} color="bg-brand-blue" />
-              <ProgressStat category="Data" completed={0} total={4} color="bg-white" />
-              <ProgressStat category="Strategy" completed={0} total={5} color="bg-gray-400" />
+              <ProgressStat category="Core Track" {...getCategoryProgress("Core Track")} color="bg-brand-orange" />
+              <ProgressStat category="Marketing" {...getCategoryProgress("Marketing")} color="bg-brand-purple" />
+              <ProgressStat category="Sales" {...getCategoryProgress("Sales")} color="bg-brand-yellow" />
+              <ProgressStat category="Support" {...getCategoryProgress("Support")} color="bg-brand-blue" />
+              <ProgressStat category="Data" {...getCategoryProgress("Data")} color="bg-white" />
+              <ProgressStat category="Strategy" {...getCategoryProgress("Strategy")} color="bg-gray-400" />
             </div>
           </div>
         </div>

@@ -12,7 +12,9 @@ import {
 
 import Logo from './components/ui/Logo';
 
-const SidebarItem = ({ icon: Icon, active, onClick }) => (
+import { useAuth } from './context/AuthContext';
+
+const SidebarItem = ({ icon: Icon, imageUrl, active, onClick }) => (
   <div
     onClick={onClick}
     className="relative flex items-center justify-center w-full py-4 cursor-pointer group"
@@ -23,15 +25,27 @@ const SidebarItem = ({ icon: Icon, active, onClick }) => (
       ${active ? 'bg-brand-yellow scale-100' : 'bg-transparent scale-0 group-hover:scale-90 group-hover:bg-white/10'}
     `} />
 
-    {/* Icon */}
-    <Icon className={`
-      relative z-10 w-6 h-6 transition-colors duration-300
-      ${active ? 'text-brand-black' : 'text-gray-400 group-hover:text-white'}
-    `} />
+    {/* Content: Icon or Image */}
+    {imageUrl ? (
+      <img
+        src={imageUrl}
+        alt="Profile"
+        className={`
+          relative z-10 w-8 h-8 rounded-full object-cover border-2 transition-all duration-300
+          ${active ? 'border-brand-black' : 'border-transparent group-hover:border-white'}
+        `}
+      />
+    ) : (
+      <Icon className={`
+        relative z-10 w-6 h-6 transition-colors duration-300
+        ${active ? 'text-brand-black' : 'text-gray-400 group-hover:text-white'}
+      `} />
+    )}
   </div>
 );
 
 const Sidebar = ({ activeView, onNavigate, onLogout }) => {
+  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const menuItems = [
@@ -39,7 +53,8 @@ const Sidebar = ({ activeView, onNavigate, onLogout }) => {
     { id: 'dashboard', icon: PlayCircle, label: 'Dashboard' },
     { id: 'messages', icon: MessageSquare, label: 'Messages' },
     { id: 'community', icon: Users, label: 'Community' },
-    { id: 'profile', icon: Settings, label: 'Settings' },
+    // Profile item will be handled specially or we can just pass the image url here if we want it in the list
+    { id: 'profile', imageUrl: user?.profile?.avatar_url || "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix", label: 'Profile' },
   ];
 
   const handleNavigate = (id) => {
@@ -86,6 +101,7 @@ const Sidebar = ({ activeView, onNavigate, onLogout }) => {
             <SidebarItem
               key={item.id}
               icon={item.icon}
+              imageUrl={item.imageUrl}
               active={activeView === item.id || (activeView === 'detail' && item.id === 'dashboard') || (activeView && activeView.startsWith('module') && item.id === 'dashboard')}
               onClick={() => handleNavigate(item.id)}
             />

@@ -10,7 +10,10 @@
     "color": "bg-brand-orange",
     "textColor": "text-white",
     "progress": 0,
-    "tags": ["#foundation", "#quick-win"]
+    "tags": [
+      "#foundation",
+      "#quick-win"
+    ]
   },
   {
     "id": 2,
@@ -23,7 +26,10 @@
     "color": "bg-brand-orange",
     "textColor": "text-white",
     "progress": 0,
-    "tags": ["#prompting", "#foundation"]
+    "tags": [
+      "#prompting",
+      "#foundation"
+    ]
   },
   {
     "id": 3,
@@ -36,7 +42,10 @@
     "color": "bg-brand-orange",
     "textColor": "text-white",
     "progress": 0,
-    "tags": ["#content", "#marketing"]
+    "tags": [
+      "#content",
+      "#marketing"
+    ]
   },
   {
     "id": 4,
@@ -49,7 +58,10 @@
     "color": "bg-brand-orange",
     "textColor": "text-white",
     "progress": 0,
-    "tags": ["#automation", "#foundation"]
+    "tags": [
+      "#automation",
+      "#foundation"
+    ]
   },
   {
     "id": 5,
@@ -62,8 +74,15 @@
     "color": "bg-brand-purple",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["Make.com", "ChatGPT API", "Buffer"],
-    "tags": ["#automation", "#socialmedia"]
+    "tools": [
+      "Make.com",
+      "ChatGPT API",
+      "Buffer"
+    ],
+    "tags": [
+      "#automation",
+      "#socialmedia"
+    ]
   },
   {
     "id": 6,
@@ -76,8 +95,15 @@
     "color": "bg-brand-purple",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT", "Descript", "Canva"],
-    "tags": ["#content", "#efficiency"]
+    "tools": [
+      "ChatGPT",
+      "Descript",
+      "Canva"
+    ],
+    "tags": [
+      "#content",
+      "#efficiency"
+    ]
   },
   {
     "id": 7,
@@ -90,8 +116,15 @@
     "color": "bg-brand-purple",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT", "SurferSEO", "Frase"],
-    "tags": ["#SEO", "#content"]
+    "tools": [
+      "ChatGPT",
+      "SurferSEO",
+      "Frase"
+    ],
+    "tags": [
+      "#SEO",
+      "#content"
+    ]
   },
   {
     "id": 8,
@@ -104,8 +137,14 @@
     "color": "bg-brand-purple",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT API", "ActiveCampaign"],
-    "tags": ["#email", "#marketing"]
+    "tools": [
+      "ChatGPT API",
+      "ActiveCampaign"
+    ],
+    "tags": [
+      "#email",
+      "#marketing"
+    ]
   },
   {
     "id": 9,
@@ -118,8 +157,15 @@
     "color": "bg-brand-purple",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["Descript", "OpusClip", "ChatGPT"],
-    "tags": ["#video", "#content"]
+    "tools": [
+      "Descript",
+      "OpusClip",
+      "ChatGPT"
+    ],
+    "tags": [
+      "#video",
+      "#content"
+    ]
   },
   {
     "id": 10,
@@ -132,8 +178,14 @@
     "color": "bg-brand-purple",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT", "Claude Projects"],
-    "tags": ["#branding", "#content"]
+    "tools": [
+      "ChatGPT",
+      "Claude Projects"
+    ],
+    "tags": [
+      "#branding",
+      "#content"
+    ]
   },
   {
     "id": 11,
@@ -146,8 +198,14 @@
     "color": "bg-brand-purple",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT", "Copy.ai"],
-    "tags": ["#advertising", "#conversion"]
+    "tools": [
+      "ChatGPT",
+      "Copy.ai"
+    ],
+    "tags": [
+      "#advertising",
+      "#conversion"
+    ]
   },
   {
     "id": 12,
@@ -160,8 +218,15 @@
     "color": "bg-brand-purple",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT", "LinkedIn", "Make.com"],
-    "tags": ["#partnerships", "#automation"]
+    "tools": [
+      "ChatGPT",
+      "LinkedIn",
+      "Make.com"
+    ],
+    "tags": [
+      "#partnerships",
+      "#automation"
+    ]
   },
   {
     "id": 13,
@@ -174,8 +239,14 @@
     "color": "bg-brand-yellow",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT API", "CRM"],
-    "tags": ["#sales", "#automation"]
+    "tools": [
+      "ChatGPT API",
+      "CRM"
+    ],
+    "tags": [
+      "#sales",
+      "#automation"
+    ]
   },
   {
     "id": 14,
@@ -188,8 +259,15 @@
     "color": "bg-brand-yellow",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT", "Perplexity", "LinkedIn"],
-    "tags": ["#sales", "#research"]
+    "tools": [
+      "ChatGPT",
+      "Perplexity",
+      "LinkedIn"
+    ],
+    "tags": [
+      "#sales",
+      "#research"
+    ]
   },
   {
     "id": 15,
@@ -202,8 +280,14 @@
     "color": "bg-brand-yellow",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT", "Google Docs API"],
-    "tags": ["#sales", "#efficiency"]
+    "tools": [
+      "ChatGPT",
+      "Google Docs API"
+    ],
+    "tags": [
+      "#sales",
+      "#efficiency"
+    ]
   },
   {
     "id": 16,
@@ -216,8 +300,14 @@
     "color": "bg-brand-yellow",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT", "Instantly"],
-    "tags": ["#sales", "#outreach"]
+    "tools": [
+      "ChatGPT",
+      "Instantly"
+    ],
+    "tags": [
+      "#sales",
+      "#outreach"
+    ]
   },
   {
     "id": 17,
@@ -230,8 +320,15 @@
     "color": "bg-brand-yellow",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT", "Otter.ai", "CRM"],
-    "tags": ["#sales", "#productivity"]
+    "tools": [
+      "ChatGPT",
+      "Otter.ai",
+      "CRM"
+    ],
+    "tags": [
+      "#sales",
+      "#productivity"
+    ]
   },
   {
     "id": 18,
@@ -244,8 +341,15 @@
     "color": "bg-brand-yellow",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT API", "Clearbit", "CRM"],
-    "tags": ["#sales", "#automation"]
+    "tools": [
+      "ChatGPT API",
+      "Clearbit",
+      "CRM"
+    ],
+    "tags": [
+      "#sales",
+      "#automation"
+    ]
   },
   {
     "id": 19,
@@ -258,8 +362,14 @@
     "color": "bg-brand-yellow",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT", "Custom GPT"],
-    "tags": ["#sales", "#training"]
+    "tools": [
+      "ChatGPT",
+      "Custom GPT"
+    ],
+    "tags": [
+      "#sales",
+      "#training"
+    ]
   },
   {
     "id": 20,
@@ -272,8 +382,15 @@
     "color": "bg-brand-blue",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["Bland.ai", "Vapi", "ElevenLabs"],
-    "tags": ["#voiceAI", "#advanced"]
+    "tools": [
+      "Bland.ai",
+      "Vapi",
+      "ElevenLabs"
+    ],
+    "tags": [
+      "#voiceAI",
+      "#advanced"
+    ]
   },
   {
     "id": 21,
@@ -286,8 +403,15 @@
     "color": "bg-brand-blue",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["Chatbase", "Voiceflow", "ChatGPT API"],
-    "tags": ["#customerservice", "#automation"]
+    "tools": [
+      "Chatbase",
+      "Voiceflow",
+      "ChatGPT API"
+    ],
+    "tags": [
+      "#customerservice",
+      "#automation"
+    ]
   },
   {
     "id": 22,
@@ -300,8 +424,14 @@
     "color": "bg-brand-blue",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT API", "Gmail API"],
-    "tags": ["#customerservice", "#automation"]
+    "tools": [
+      "ChatGPT API",
+      "Gmail API"
+    ],
+    "tags": [
+      "#customerservice",
+      "#automation"
+    ]
   },
   {
     "id": 23,
@@ -314,8 +444,15 @@
     "color": "bg-brand-blue",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT", "Notion API", "Zendesk"],
-    "tags": ["#customerservice", "#content"]
+    "tools": [
+      "ChatGPT",
+      "Notion API",
+      "Zendesk"
+    ],
+    "tags": [
+      "#customerservice",
+      "#content"
+    ]
   },
   {
     "id": 24,
@@ -328,8 +465,15 @@
     "color": "bg-brand-blue",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT", "Make.com", "Airtable"],
-    "tags": ["#analytics", "#customerservice"]
+    "tools": [
+      "ChatGPT",
+      "Make.com",
+      "Airtable"
+    ],
+    "tags": [
+      "#analytics",
+      "#customerservice"
+    ]
   },
   {
     "id": 25,
@@ -342,8 +486,15 @@
     "color": "bg-brand-blue",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT API", "Email platform", "Loom"],
-    "tags": ["#customerservice", "#automation"]
+    "tools": [
+      "ChatGPT API",
+      "Email platform",
+      "Loom"
+    ],
+    "tags": [
+      "#customerservice",
+      "#automation"
+    ]
   },
   {
     "id": 26,
@@ -356,8 +507,15 @@
     "color": "bg-brand-black",
     "textColor": "text-white",
     "progress": 0,
-    "tools": ["ChatGPT", "Perplexity", "Claude"],
-    "tags": ["#research", "#strategy"]
+    "tools": [
+      "ChatGPT",
+      "Perplexity",
+      "Claude"
+    ],
+    "tags": [
+      "#research",
+      "#strategy"
+    ]
   },
   {
     "id": 27,
@@ -370,8 +528,15 @@
     "color": "bg-brand-black",
     "textColor": "text-white",
     "progress": 0,
-    "tools": ["ChatGPT", "Python", "Sheets"],
-    "tags": ["#analytics", "#insights"]
+    "tools": [
+      "ChatGPT",
+      "Python",
+      "Sheets"
+    ],
+    "tags": [
+      "#analytics",
+      "#insights"
+    ]
   },
   {
     "id": 28,
@@ -384,8 +549,15 @@
     "color": "bg-brand-black",
     "textColor": "text-white",
     "progress": 0,
-    "tools": ["ChatGPT API", "Looker Studio", "Make.com"],
-    "tags": ["#analytics", "#automation"]
+    "tools": [
+      "ChatGPT API",
+      "Looker Studio",
+      "Make.com"
+    ],
+    "tags": [
+      "#analytics",
+      "#automation"
+    ]
   },
   {
     "id": 29,
@@ -398,8 +570,15 @@
     "color": "bg-brand-black",
     "textColor": "text-white",
     "progress": 0,
-    "tools": ["ChatGPT", "Python", "Google Sheets"],
-    "tags": ["#analytics", "#forecasting"]
+    "tools": [
+      "ChatGPT",
+      "Python",
+      "Google Sheets"
+    ],
+    "tags": [
+      "#analytics",
+      "#forecasting"
+    ]
   },
   {
     "id": 30,
@@ -412,8 +591,14 @@
     "color": "bg-gray-200",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT", "Template"],
-    "tags": ["#strategy", "#planning"]
+    "tools": [
+      "ChatGPT",
+      "Template"
+    ],
+    "tags": [
+      "#strategy",
+      "#planning"
+    ]
   },
   {
     "id": 31,
@@ -426,8 +611,14 @@
     "color": "bg-gray-200",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["ChatGPT", "Notion"],
-    "tags": ["#strategy", "#management"]
+    "tools": [
+      "ChatGPT",
+      "Notion"
+    ],
+    "tags": [
+      "#strategy",
+      "#management"
+    ]
   },
   {
     "id": 32,
@@ -440,8 +631,14 @@
     "color": "bg-gray-200",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["Spreadsheet", "ChatGPT"],
-    "tags": ["#strategy", "#efficiency"]
+    "tools": [
+      "Spreadsheet",
+      "ChatGPT"
+    ],
+    "tags": [
+      "#strategy",
+      "#efficiency"
+    ]
   },
   {
     "id": 33,
@@ -454,8 +651,14 @@
     "color": "bg-gray-200",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["Spreadsheet", "Time tracking"],
-    "tags": ["#analytics", "#strategy"]
+    "tools": [
+      "Spreadsheet",
+      "Time tracking"
+    ],
+    "tags": [
+      "#analytics",
+      "#strategy"
+    ]
   },
   {
     "id": 34,
@@ -468,7 +671,33 @@
     "color": "bg-gray-200",
     "textColor": "text-brand-black",
     "progress": 0,
-    "tools": ["Guidelines", "Checklist"],
-    "tags": ["#strategy", "#compliance"]
+    "tools": [
+      "Guidelines",
+      "Checklist"
+    ],
+    "tags": [
+      "#strategy",
+      "#compliance"
+    ]
+  },
+  {
+    "id": 35,
+    "title": "Building Custom GPTs for Your Business",
+    "category": "Strategy",
+    "outcome": "Create specialized AI assistants for repetitive tasks",
+    "difficulty": "Intermediate",
+    "time": "2-3h",
+    "priority": "Post-Launch",
+    "color": "bg-brand-orange",
+    "textColor": "text-white",
+    "progress": 0,
+    "tools": [
+      "ChatGPT Plus"
+    ],
+    "tags": [
+      "#intermediate",
+      "#customization",
+      "#productivity"
+    ]
   }
 ]

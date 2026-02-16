@@ -5,8 +5,10 @@ import ModuleDashboardSimple from './ModuleDashboardSimple';
 import ModuleDetailView from './ModuleDetailView';
 import Module1Content from './Module1Content';
 import Module4Content from './Module4Content';
+import Module5Content from './Module5Content';
 import Module2Content from './Module2Content';
 import Module3Content from './Module3Content';
+import Module35Content from './Module35Content';
 import LoginForm from './components/auth/LoginForm';
 import SignupForm from './components/auth/SignupForm';
 import UserProfile from './components/profile/UserProfile';
@@ -57,6 +59,10 @@ function App() {
       setView('module3');
     } else if (module.id === 4) {
       setView('module4');
+    } else if (module.id === 5) {
+      setView('module5');
+    } else if (module.id === 35) {
+      setView('module35');
     } else {
       setView('detail');
     }
@@ -196,6 +202,12 @@ function App() {
         </PlatformLayout>
       )}
 
+      {view === 'module5' && (
+        <PlatformLayout activeView={view} onNavigate={setView} onLogout={handleLogout}>
+          <Module5Content onBack={() => setView('dashboard')} />
+        </PlatformLayout>
+      )}
+
       {view === 'module2' && (
         <PlatformLayout activeView={view} onNavigate={setView} onLogout={handleLogout}>
           <Module2Content onBack={handleBackToDashboard} />
@@ -205,6 +217,12 @@ function App() {
       {view === 'module3' && (
         <PlatformLayout activeView={view} onNavigate={setView} onLogout={handleLogout}>
           <Module3Content onBack={handleBackToDashboard} />
+        </PlatformLayout>
+      )}
+
+      {view === 'module35' && (
+        <PlatformLayout activeView={view} onNavigate={setView} onLogout={handleLogout}>
+          <Module35Content onBack={handleBackToDashboard} />
         </PlatformLayout>
       )}
 
