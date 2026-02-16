@@ -72,25 +72,31 @@ const SplashPage = ({ onGetStarted, onLogin }) => {
                     animate="visible"
                     className="relative z-10 max-w-4xl"
                 >
-                    <motion.div variants={itemVariants} className="mb-6 inline-block">
-                        <span className="px-4 py-2 bg-brand-yellow border-2 border-brand-black rounded-full font-bold text-sm shadow-neo-sm">
-                            ✨ The Future of Work is Here
+                    <motion.div variants={itemVariants} className="mb-8 inline-block">
+                        <span className="px-6 py-3 bg-brand-yellow border-2 border-brand-black rounded-full font-bold text-xl shadow-neo transition-transform hover:scale-105 inline-block">
+                            LVL UP AI ACADEMY
                         </span>
                     </motion.div>
 
-                    <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-bold mb-8 leading-tight text-brand-black">
-                        Master AI Agents & <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-brand-orange">
-                            Scale Your Business
-                        </span>
-                    </motion.h1>
+                    <motion.div variants={itemVariants} className="mb-10 w-full max-w-2xl mx-auto">
+                        <motion.div
+                            animate={{ y: [0, -10, 0] }}
+                            transition={{
+                                duration: 5,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                            }}
+                            className="bg-white rounded-card border-[3px] border-brand-black shadow-2xl overflow-hidden transform rotate-[-1deg] transition-all duration-300 hover:rotate-0 hover:shadow-xl"
+                        >
+                            <img
+                                src="/lvl-up-logo-splash.png"
+                                alt="LVL UP AI Academy"
+                                className="w-full h-auto block"
+                            />
+                        </motion.div>
+                    </motion.div>
 
-                    <motion.p variants={itemVariants} className="text-xl md:text-2xl text-gray-600 mb-10 max-w-2xl mx-auto">
-                        Join the elite community of entrepreneurs using AI to automate workflows,
-                        multiply output, and reclaim their time.
-                    </motion.p>
-
-                    <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
                         <button
                             onClick={onGetStarted}
                             className="px-8 py-4 bg-brand-orange text-white text-lg font-bold rounded-full border-2 border-brand-black shadow-neo hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center justify-center gap-2 group"
@@ -105,6 +111,18 @@ const SplashPage = ({ onGetStarted, onLogin }) => {
                             View Curriculum
                         </button>
                     </motion.div>
+
+                    <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-bold mb-8 leading-tight text-brand-black">
+                        Master AI Agents & <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-brand-orange">
+                            Scale Your Business
+                        </span>
+                    </motion.h1>
+
+                    <motion.p variants={itemVariants} className="text-xl md:text-2xl text-gray-600 mb-10 max-w-2xl mx-auto">
+                        Join the elite community of entrepreneurs using AI to automate workflows,
+                        multiply output, and reclaim their time.
+                    </motion.p>
                 </motion.div>
             </section>
 
