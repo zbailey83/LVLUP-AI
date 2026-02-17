@@ -40,10 +40,10 @@ const ModuleDashboardSimple = ({ onModuleSelect, selectedPath, onBackToPaths, us
 
   const categoryConfig = {
     'All': { icon: toucanIcon, color: 'bg-white', textColor: 'text-brand-black' },
-    'Core Track': { icon: contentMachineIcon, color: 'bg-brand-purple', textColor: 'text-white' },
+    'Core Track': { icon: contentMachineIcon, color: 'bg-brand-orange', textColor: 'text-white' },
     'Sales': { icon: salesAutomatorIcon, color: 'bg-brand-yellow', textColor: 'text-brand-black' },
     'Support': { icon: customerServiceIcon, color: 'bg-brand-blue', textColor: 'text-white' },
-    'Marketing': { icon: marketingMultiplierIcon, color: 'bg-brand-orange', textColor: 'text-white' },
+    'Marketing': { icon: marketingMultiplierIcon, color: 'bg-brand-purple', textColor: 'text-white' },
     'Data': { icon: dataDrivenIcon, color: 'bg-brand-black', textColor: 'text-white' },
     'Strategy': { icon: efficiencyExpertIcon, color: 'bg-gray-200', textColor: 'text-brand-black' },
   };

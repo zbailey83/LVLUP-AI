@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import { ArrowLeft, Play, Clock, Target, CheckCircle, Copy, Check, Download, ExternalLink } from 'lucide-react';
+import { useAuth } from './context/AuthContext';
 
 const Module1Content = ({ onBack }) => {
-  const [activeSection, setActiveSection] = useState('overview');
+  const [activeTab, setActiveTab] = useState('overview');
+
   const [completedSteps, setCompletedSteps] = useState([]);
   const [copiedPrompt, setCopiedPrompt] = useState(null);
+  const { user } = useAuth(); // Assuming useAuth is available or imported
 
   const copyToClipboard = (text, promptId) => {
     navigator.clipboard.writeText(text);
@@ -20,7 +24,7 @@ const Module1Content = ({ onBack }) => {
   };
 
   const sections = [
-    { id: 'overview', label: 'Overview', icon: '📋' },
+    { id: 'overview', label: 'Overview & Video', icon: '📺' },
     { id: 'phase1', label: 'Phase 1: Tool Stack', icon: '🛠️' },
     { id: 'phase2', label: 'Phase 2: Calibration', icon: '⚙️' },
     { id: 'phase3', label: 'Phase 3: First Win', icon: '🎯' },
@@ -39,101 +43,159 @@ const Module1Content = ({ onBack }) => {
     { id: 'step8', phase: 'phase3', title: 'Generate your project outline' }
   ];
 
-  const progress = Math.round((completedSteps.length / steps.length) * 100);
-
   return (
-    <div className="min-h-screen bg-brand-offwhite">
+    <div className="min-h-screen bg-brand-offwhite font-kodchassan animate-fade-in">
       {/* Header */}
-      <div className="bg-brand-orange border-b-2 border-brand-black">
-        <div className="max-w-7xl mx-auto px-8 py-6">
-          <button 
+      <div className="bg-brand-orange border-b-2 border-brand-black sticky top-0 z-20">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-6">
+          <button
             onClick={onBack}
-            className="mb-4 px-4 py-2 bg-white border-2 border-brand-black rounded-full font-bold hover:bg-brand-yellow transition-colors"
+            className="flex items-center gap-2 mb-4 text-white font-bold hover:underline"
           >
-            ← Back to Dashboard
+            <ArrowLeft className="w-5 h-5" /> Back to Dashboard
           </button>
-          
-          <div className="flex items-start justify-between flex-wrap gap-4">
+
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span className="inline-block px-3 py-1 bg-brand-black text-white text-xs font-bold rounded-lg mb-2">
                 CORE TRACK • MODULE 1
               </span>
-              <h1 className="text-4xl font-bold text-white mb-2">AI Quick Start for Business</h1>
-              <p className="text-white/90 text-lg font-medium">"From Paralysis to Power User in 24 Hours"</p>
+              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">AI Quick Start for Business</h1>
+              <p className="text-white/90 text-lg font-medium">From Paralysis to Power User in 24 Hours</p>
             </div>
-            
-            <div className="bg-white border-2 border-brand-black rounded-xl p-4 min-w-[200px]">
-              <div className="text-xs font-bold text-gray-500 mb-1">YOUR PROGRESS</div>
-              <div className="flex items-center gap-3">
-                <div className="flex-1 bg-gray-200 h-3 rounded-full border border-brand-black">
-                  <div 
-                    className="bg-brand-orange h-full rounded-full transition-all duration-500"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-                <span className="text-2xl font-bold">{progress}%</span>
+
+            <div className="bg-white border-2 border-brand-black rounded-xl p-3 min-w-[150px] shadow-neo-sm">
+              <div className="text-xs font-bold text-gray-500 mb-1">KEY OUTCOME</div>
+              <div className="font-bold text-brand-black leading-tight">
+                A "Digital Second Brain" set up & operational
               </div>
-              <div className="text-xs text-gray-600 mt-1">{completedSteps.length}/{steps.length} steps</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Navigation Tabs */}
-      <div className="border-b-2 border-brand-black bg-white sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="flex gap-2 overflow-x-auto no-scrollbar py-2">
-            {sections.map(section => (
-              <button
-                key={section.id}
-                onClick={() => setActiveSection(section.id)}
-                className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all ${
-                  activeSection === section.id
-                    ? 'bg-brand-yellow border-2 border-brand-black'
-                    : 'bg-gray-100 border-2 border-transparent hover:border-brand-black'
+      {/* Content Container */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+
+        {/* Navigation Tabs */}
+        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-6 mb-6 border-b-2 border-gray-200">
+          {sections.map(section => (
+            <button
+              key={section.id}
+              onClick={() => setActiveTab(section.id)}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-bold whitespace-nowrap transition-all border-2 ${activeTab === section.id
+                ? 'bg-brand-yellow border-brand-black shadow-neo-sm'
+                : 'bg-white border-transparent hover:border-brand-black hover:bg-gray-50'
                 }`}
-              >
-                {section.icon} {section.label}
-              </button>
-            ))}
-          </div>
+            >
+              <span>{section.icon}</span> {section.label}
+            </button>
+          ))}
         </div>
-      </div>
 
-      {/* Content Area */}
-      <div className="max-w-7xl mx-auto px-8 py-8">
         <div className="grid grid-cols-12 gap-8">
-          {/* Main Content */}
           <div className="col-span-12 lg:col-span-8">
-            {activeSection === 'overview' && (
-              <OverviewSection />
+
+            {/* Overview & Video Section */}
+            {activeTab === 'overview' && (
+              <div className="space-y-8 animate-slide-up">
+                {/* Video Player Card */}
+                <div className="bg-black rounded-card overflow-hidden shadow-neo border-2 border-brand-black">
+                  <div className="aspect-video bg-gray-900 flex items-center justify-center relative">
+                    <div className="text-center">
+                      <p className="text-gray-500 mb-2">Video Placeholder</p>
+                      {/* Replace with actual video tag when available */}
+                      <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto cursor-pointer hover:bg-white/20 hover:scale-110 transition-all">
+                        <Play className="w-8 h-8 text-white fill-current" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4 bg-gray-900 text-white border-t border-gray-800 flex justify-between items-center">
+                    <div>
+                      <h3 className="font-bold">AI Quick Start</h3>
+                      <p className="text-xs text-gray-400">Setting up your digital second brain.</p>
+                    </div>
+                    <button className="text-xs font-bold bg-white/10 hover:bg-white/20 px-3 py-1 rounded transition-colors">
+                      Mark Complete
+                    </button>
+                  </div>
+                </div>
+
+                <OverviewSection />
+              </div>
             )}
-            
-            {activeSection === 'phase1' && (
-              <Phase1Section steps={steps.filter(s => s.phase === 'phase1')} completedSteps={completedSteps} toggleStep={toggleStep} />
+
+            {activeTab === 'phase1' && (
+              <div className="animate-slide-up">
+                <Phase1Section steps={steps.filter(s => s.phase === 'phase1')} completedSteps={completedSteps} toggleStep={toggleStep} />
+              </div>
             )}
-            
-            {activeSection === 'phase2' && (
-              <Phase2Section steps={steps.filter(s => s.phase === 'phase2')} completedSteps={completedSteps} toggleStep={toggleStep} />
+
+            {activeTab === 'phase2' && (
+              <div className="animate-slide-up">
+                <Phase2Section steps={steps.filter(s => s.phase === 'phase2')} completedSteps={completedSteps} toggleStep={toggleStep} />
+              </div>
             )}
-            
-            {activeSection === 'phase3' && (
-              <Phase3Section steps={steps.filter(s => s.phase === 'phase3')} completedSteps={completedSteps} toggleStep={toggleStep} />
+
+            {activeTab === 'phase3' && (
+              <div className="animate-slide-up">
+                <Phase3Section steps={steps.filter(s => s.phase === 'phase3')} completedSteps={completedSteps} toggleStep={toggleStep} />
+              </div>
             )}
-            
-            {activeSection === 'prompts' && (
-              <PromptsSection copyToClipboard={copyToClipboard} copiedPrompt={copiedPrompt} />
+
+            {activeTab === 'prompts' && (
+              <div className="animate-slide-up">
+                <PromptsSection copyToClipboard={copyToClipboard} copiedPrompt={copiedPrompt} />
+              </div>
             )}
-            
-            {activeSection === 'resources' && (
-              <ResourcesSection />
+
+            {activeTab === 'resources' && (
+              <div className="animate-slide-up">
+                <ResourcesSection />
+              </div>
             )}
+
           </div>
 
-          {/* Sidebar */}
-          <div className="col-span-12 lg:col-span-4">
-            <QuickInfoCard />
-            <ChecklistCard steps={steps} completedSteps={completedSteps} toggleStep={toggleStep} setActiveSection={setActiveSection} />
+          {/* Sidebar Stats */}
+          <div className="col-span-12 lg:col-span-4 space-y-6">
+            <div className="bg-white border-2 border-brand-black rounded-card p-6 sticky top-24">
+              <h3 className="font-bold text-lg mb-4">Module Details</h3>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <Clock className="w-5 h-5 text-gray-400" />
+                  <div>
+                    <p className="text-xs text-gray-500 font-bold uppercase">Time</p>
+                    <p className="font-bold">90-120 min</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Target className="w-5 h-5 text-gray-400" />
+                  <div>
+                    <p className="text-xs text-gray-500 font-bold uppercase">Difficulty</p>
+                    <p className="font-bold text-green-600">Beginner</p>
+                  </div>
+                </div>
+              </div>
+
+              <hr className="my-6 border-gray-200" />
+
+              <button className="w-full py-3 bg-brand-black text-white font-bold rounded-lg hover:bg-gray-800 transition-colors">
+                Download Resources
+              </button>
+
+              <div className="mt-6 p-4 bg-gray-100 rounded-lg text-sm">
+                <p className="font-bold mb-2">Tools Required:</p>
+                <ul className="list-disc list-inside text-gray-600">
+                  <li>ChatGPT Plus / Claude</li>
+                  <li>Mobile App</li>
+                  <li>Valid Email</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Optional: Keep checklist if desired, or remove to match Module 5 purely */}
+            <ChecklistCard steps={steps} completedSteps={completedSteps} toggleStep={toggleStep} setActiveSection={setActiveTab} />
           </div>
         </div>
       </div>
@@ -145,30 +207,30 @@ const Module1Content = ({ onBack }) => {
 const OverviewSection = () => (
   <div className="bg-white border-2 border-brand-black rounded-card p-8">
     <h2 className="text-3xl font-bold mb-6">The "Empty Box" Problem</h2>
-    
+
     <div className="prose max-w-none">
       <p className="text-lg mb-4">
-        Welcome to the LVL UP AI ACADEMY. If you're reading this, you likely fall into one of two camps: 
-        either you've dabbled with ChatGPT and found the results "generic and robotic," or you haven't 
+        Welcome to the LVL UP AI ACADEMY. If you're reading this, you likely fall into one of two camps:
+        either you've dabbled with ChatGPT and found the results "generic and robotic," or you haven't
         started because the sheer number of tools is paralyzing.
       </p>
-      
+
       <div className="bg-brand-yellow/20 border-2 border-brand-black rounded-xl p-6 my-6">
         <p className="font-bold text-lg mb-2">💡 Here's the truth:</p>
         <p>
-          AI models are like high-performance interns who show up on their first day with amnesia. 
-          They don't know your business, your voice, your customers, or your goals. When you open a 
+          AI models are like high-performance interns who show up on their first day with amnesia.
+          They don't know your business, your voice, your customers, or your goals. When you open a
           fresh chat, you're handing them an empty box. If you put garbage in, you get garbage out.
         </p>
       </div>
-      
+
       <p className="text-lg mb-4">
-        In this first module, we're not just "signing up" for accounts. We're <strong>Context Engineering</strong>. 
-        We're going to configure your AI's memory and settings so that every time you interact with it, 
-        it already knows who you are. Then, we'll bypass the keyboard entirely to turn your scattered 
+        In this first module, we're not just "signing up" for accounts. We're <strong>Context Engineering</strong>.
+        We're going to configure your AI's memory and settings so that every time you interact with it,
+        it already knows who you are. Then, we'll bypass the keyboard entirely to turn your scattered
         thoughts into a cohesive project plan.
       </p>
-      
+
       <div className="bg-brand-orange/10 border-2 border-brand-black rounded-xl p-6 my-6">
         <h3 className="text-xl font-bold mb-3">🎯 By the end of this session, you will have:</h3>
         <ul className="space-y-2">
@@ -178,7 +240,7 @@ const OverviewSection = () => (
           <li>✅ A workflow you can repeat for any business challenge</li>
         </ul>
       </div>
-      
+
       <h3 className="text-2xl font-bold mt-8 mb-4">Prerequisites</h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="border-2 border-brand-black rounded-xl p-4">
@@ -209,7 +271,7 @@ const Phase1Section = ({ steps, completedSteps, toggleStep }) => (
       <p className="text-lg text-gray-700 mb-6">
         The first hurdle is "Tool Fatigue." There are 10,000 AI tools, but you only need <strong>one</strong> to start.
       </p>
-      
+
       <div className="bg-gray-50 border-2 border-brand-black rounded-xl p-6 mb-6">
         <h3 className="text-xl font-bold mb-4">Decision Matrix: Which LLM is right for you?</h3>
         <div className="overflow-x-auto">
@@ -241,7 +303,7 @@ const Phase1Section = ({ steps, completedSteps, toggleStep }) => (
           </table>
         </div>
       </div>
-      
+
       <div className="bg-brand-yellow/20 border-2 border-brand-black rounded-xl p-6 mb-6">
         <h4 className="font-bold text-lg mb-2">💡 Recommendation:</h4>
         <ul className="space-y-2">
@@ -249,18 +311,18 @@ const Phase1Section = ({ steps, completedSteps, toggleStep }) => (
           <li>• <strong>Choose Claude</strong> if your primary focus is writing copy, blogs, or strategy documents</li>
         </ul>
       </div>
-      
+
       <h3 className="text-2xl font-bold mb-4 mt-8">Action Item: Account Security & Privacy</h3>
       <div className="space-y-4">
         {steps.map(step => (
           <StepCheckbox key={step.id} step={step} completed={completedSteps.includes(step.id)} onToggle={toggleStep} />
         ))}
       </div>
-      
+
       <div className="bg-red-50 border-2 border-red-500 rounded-xl p-6 mt-6">
         <h4 className="font-bold text-lg mb-2 text-red-700">⚠️ Critical Privacy Step</h4>
         <p className="text-red-700">
-          Most business owners unknowingly train public AI models with their proprietary data. 
+          Most business owners unknowingly train public AI models with their proprietary data.
           Go to <strong>Settings → Data Controls</strong> and toggle OFF "Improve the model for everyone."
         </p>
       </div>
@@ -278,7 +340,7 @@ const Phase2Section = ({ steps, completedSteps, toggleStep }) => (
     <p className="text-lg text-gray-700 mb-6">
       This is the <strong>most critical step</strong> in the entire Academy. We're going to kill the "Robot Voice" before it starts.
     </p>
-    
+
     <div className="bg-brand-purple/20 border-2 border-brand-black rounded-xl p-6 mb-6">
       <h3 className="text-xl font-bold mb-3">The "Context Injection" Protocol</h3>
       <p className="mb-4">You need to tell the AI two things:</p>
@@ -287,24 +349,24 @@ const Phase2Section = ({ steps, completedSteps, toggleStep }) => (
         <li className="font-bold">How you want it to behave (Tone/Format)</li>
       </ol>
     </div>
-    
+
     <div className="mb-6">
       <h4 className="font-bold text-lg mb-3">📍 Navigate to: Profile Icon → Custom Instructions</h4>
-      
+
       <div className="space-y-4">
         <div className="border-2 border-brand-black rounded-xl p-6 bg-gray-50">
           <h5 className="font-bold mb-2">Box 1: "What would you like ChatGPT to know about you?"</h5>
           <div className="bg-white border border-gray-300 rounded p-4 font-mono text-sm">
             <p className="italic text-gray-600">Draft a bio using this structure:</p>
             <p className="mt-2">
-              "I am the [ROLE] of [BUSINESS NAME], a [INDUSTRY] company that helps [TARGET AUDIENCE] 
-              achieve [CORE BENEFIT]. My biggest challenges are [PAIN POINT 1] and [PAIN POINT 2]. 
-              I value speed, directness, and actionable data over fluff. My audience appreciates 
+              "I am the [ROLE] of [BUSINESS NAME], a [INDUSTRY] company that helps [TARGET AUDIENCE]
+              achieve [CORE BENEFIT]. My biggest challenges are [PAIN POINT 1] and [PAIN POINT 2].
+              I value speed, directness, and actionable data over fluff. My audience appreciates
               [TONE: e.g., witty, professional, empathetic] communication."
             </p>
           </div>
         </div>
-        
+
         <div className="border-2 border-brand-black rounded-xl p-6 bg-gray-50">
           <h5 className="font-bold mb-2">Box 2: "How would you like ChatGPT to respond?"</h5>
           <div className="bg-white border border-gray-300 rounded p-4 font-mono text-sm">
@@ -320,12 +382,12 @@ const Phase2Section = ({ steps, completedSteps, toggleStep }) => (
         </div>
       </div>
     </div>
-    
+
     <div className="bg-brand-yellow/20 border-2 border-brand-black rounded-xl p-6 mb-6">
       <p className="font-bold">💡 Why this works:</p>
       <p>You've just saved yourself from typing that paragraph 5,000 times over the next year.</p>
     </div>
-    
+
     <div className="space-y-4 mt-6">
       {steps.map(step => (
         <StepCheckbox key={step.id} step={step} completed={completedSteps.includes(step.id)} onToggle={toggleStep} />
@@ -341,7 +403,7 @@ const Phase3Section = ({ steps, completedSteps, toggleStep }) => (
     <p className="text-lg text-gray-700 mb-6">
       Now we execute. We're going to use <strong>Voice Mode</strong> to convert mental clutter into a project plan.
     </p>
-    
+
     <div className="bg-brand-blue/20 border-2 border-brand-black rounded-xl p-6 mb-6">
       <h3 className="text-xl font-bold mb-4">The Workflow:</h3>
       <ol className="space-y-4">
@@ -365,7 +427,7 @@ const Phase3Section = ({ steps, completedSteps, toggleStep }) => (
             <p className="font-bold">The Ramble (3-5 Minutes)</p>
             <p className="text-sm text-gray-600 mb-2">Walk around the room. Speak naturally. Don't try to structure your thoughts.</p>
             <div className="bg-white border border-gray-300 rounded p-3 text-sm italic">
-              Say: "Hey, I want to do a brain dump for a new project. I'm going to just ramble for a few minutes 
+              Say: "Hey, I want to do a brain dump for a new project. I'm going to just ramble for a few minutes
               about [YOUR TOPIC]. Don't interrupt me until I say 'I'm done.' Just listen."
             </div>
           </div>
@@ -376,22 +438,22 @@ const Phase3Section = ({ steps, completedSteps, toggleStep }) => (
             <p className="font-bold">The Synthesis</p>
             <p className="text-sm text-gray-600 mb-2">When you're finished, say:</p>
             <div className="bg-white border border-gray-300 rounded p-3 text-sm italic">
-              "I'm done. Please organize that entire mess into a structured Project Outline. Give me a list of 
+              "I'm done. Please organize that entire mess into a structured Project Outline. Give me a list of
               clear objectives, a timeline, and the top 3 risks I need to watch out for."
             </div>
           </div>
         </li>
       </ol>
     </div>
-    
+
     <div className="bg-green-50 border-2 border-green-500 rounded-xl p-6 mb-6">
       <h4 className="font-bold text-lg mb-2 text-green-700">✨ The Result:</h4>
       <p className="text-green-700">
-        You'll watch in real-time as the AI takes your anxiety-induced rambling and structures it into a 
+        You'll watch in real-time as the AI takes your anxiety-induced rambling and structures it into a
         coherent, professional strategy document.
       </p>
     </div>
-    
+
     <div className="space-y-4 mt-6">
       {steps.map(step => (
         <StepCheckbox key={step.id} step={step} completed={completedSteps.includes(step.id)} onToggle={toggleStep} />
@@ -443,7 +505,7 @@ Here is the dump: [PASTE TEXT]`
           Here are the specific prompts to support the workflows in this module. Click to copy!
         </p>
       </div>
-      
+
       {prompts.map(prompt => (
         <div key={prompt.id} className="bg-white border-2 border-brand-black rounded-card p-6">
           <div className="flex justify-between items-start mb-3">
@@ -472,11 +534,11 @@ const ResourcesSection = () => (
   <div className="space-y-6">
     <div className="bg-white border-2 border-brand-black rounded-card p-8">
       <h2 className="text-3xl font-bold mb-6">Resource List</h2>
-      
+
       <h3 className="text-2xl font-bold mb-4">Required Tools</h3>
       <div className="space-y-4 mb-8">
-        <a href="https://openai.com" target="_blank" rel="noopener noreferrer" 
-           className="block p-4 border-2 border-brand-black rounded-xl hover:bg-brand-yellow transition-colors">
+        <a href="https://openai.com" target="_blank" rel="noopener noreferrer"
+          className="block p-4 border-2 border-brand-black rounded-xl hover:bg-brand-yellow transition-colors">
           <div className="flex items-center justify-between">
             <div>
               <h4 className="font-bold text-lg">OpenAI ChatGPT</h4>
@@ -485,9 +547,9 @@ const ResourcesSection = () => (
             <span className="text-2xl">→</span>
           </div>
         </a>
-        
+
         <a href="https://anthropic.com" target="_blank" rel="noopener noreferrer"
-           className="block p-4 border-2 border-brand-black rounded-xl hover:bg-brand-yellow transition-colors">
+          className="block p-4 border-2 border-brand-black rounded-xl hover:bg-brand-yellow transition-colors">
           <div className="flex items-center justify-between">
             <div>
               <h4 className="font-bold text-lg">Anthropic Claude</h4>
@@ -496,9 +558,9 @@ const ResourcesSection = () => (
             <span className="text-2xl">→</span>
           </div>
         </a>
-        
+
         <a href="https://perplexity.ai" target="_blank" rel="noopener noreferrer"
-           className="block p-4 border-2 border-brand-black rounded-xl hover:bg-brand-yellow transition-colors">
+          className="block p-4 border-2 border-brand-black rounded-xl hover:bg-brand-yellow transition-colors">
           <div className="flex items-center justify-between">
             <div>
               <h4 className="font-bold text-lg">Perplexity AI</h4>
@@ -508,7 +570,7 @@ const ResourcesSection = () => (
           </div>
         </a>
       </div>
-      
+
       <h3 className="text-2xl font-bold mb-4">Related Modules</h3>
       <div className="space-y-3">
         <div className="p-4 bg-brand-orange/10 border-2 border-brand-black rounded-xl">
@@ -526,15 +588,13 @@ const ResourcesSection = () => (
 
 // Helper Components
 const StepCheckbox = ({ step, completed, onToggle }) => (
-  <div 
+  <div
     onClick={() => onToggle(step.id)}
-    className={`flex items-center gap-3 p-4 border-2 border-brand-black rounded-xl cursor-pointer transition-all ${
-      completed ? 'bg-green-100' : 'bg-white hover:bg-gray-50'
-    }`}
+    className={`flex items-center gap-3 p-4 border-2 border-brand-black rounded-xl cursor-pointer transition-all ${completed ? 'bg-green-100' : 'bg-white hover:bg-gray-50'
+      }`}
   >
-    <div className={`w-6 h-6 rounded border-2 border-brand-black flex items-center justify-center font-bold ${
-      completed ? 'bg-green-500 text-white' : 'bg-white'
-    }`}>
+    <div className={`w-6 h-6 rounded border-2 border-brand-black flex items-center justify-center font-bold ${completed ? 'bg-green-500 text-white' : 'bg-white'
+      }`}>
       {completed && '✓'}
     </div>
     <span className={`flex-1 ${completed ? 'line-through text-gray-500' : 'font-medium'}`}>

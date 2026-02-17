@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { ArrowLeft, Play, Clock, Target, CheckCircle, Copy, Check, Download, ExternalLink } from 'lucide-react';
 
 const Module3Content = ({ onBack }) => {
-  const [activeSection, setActiveSection] = useState('overview');
+  const [activeTab, setActiveTab] = useState('overview');
   const [completedSteps, setCompletedSteps] = useState([]);
   const [copiedPrompt, setCopiedPrompt] = useState(null);
 
@@ -20,7 +21,7 @@ const Module3Content = ({ onBack }) => {
   };
 
   const sections = [
-    { id: 'overview', label: 'Overview', icon: '📋' },
+    { id: 'overview', label: 'Overview & Video', icon: '📺' },
     { id: 'voice', label: 'Brand Voice', icon: '🎤' },
     { id: 'pillars', label: 'Content Pillars', icon: '🏛️' },
     { id: 'repurposing', label: 'Repurposing Matrix', icon: '♻️' },
@@ -40,105 +41,158 @@ const Module3Content = ({ onBack }) => {
     { id: 'step8', title: 'Set up your content calendar' }
   ];
 
-  const progress = Math.round((completedSteps.length / steps.length) * 100);
-
   return (
-    <div className="min-h-screen bg-brand-offwhite">
+    <div className="min-h-screen bg-brand-offwhite font-kodchassan animate-fade-in">
       {/* Header */}
-      <div className="bg-brand-purple border-b-2 border-brand-black">
-        <div className="max-w-7xl mx-auto px-8 py-6">
-          <button 
+      <div className="bg-brand-orange border-b-2 border-brand-black sticky top-0 z-20">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-6">
+          <button
             onClick={onBack}
-            className="mb-4 px-4 py-2 bg-white border-2 border-brand-black rounded-full font-bold hover:bg-brand-yellow transition-colors"
+            className="flex items-center gap-2 mb-4 text-white font-bold hover:underline"
           >
-            ← Back to Dashboard
+            <ArrowLeft className="w-5 h-5" /> Back to Dashboard
           </button>
-          
-          <div className="flex items-start justify-between flex-wrap gap-4">
+
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span className="inline-block px-3 py-1 bg-brand-black text-white text-xs font-bold rounded-lg mb-2">
                 CORE TRACK • MODULE 3
               </span>
-              <h1 className="text-4xl font-bold text-white mb-2">AI for Content & Marketing Fundamentals</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Content & Marketing Fundamentals</h1>
               <p className="text-white/90 text-lg font-medium">"The Infinite Content Engine"</p>
             </div>
-            
-            <div className="bg-white border-2 border-brand-black rounded-xl p-4 min-w-[200px]">
-              <div className="text-xs font-bold text-gray-500 mb-1">YOUR PROGRESS</div>
-              <div className="flex items-center gap-3">
-                <div className="flex-1 bg-gray-200 h-3 rounded-full border border-brand-black">
-                  <div 
-                    className="bg-brand-purple h-full rounded-full transition-all duration-500"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-                <span className="text-2xl font-bold">{progress}%</span>
+
+            <div className="bg-white border-2 border-brand-black rounded-xl p-3 min-w-[150px] shadow-neo-sm">
+              <div className="text-xs font-bold text-gray-500 mb-1">KEY OUTCOME</div>
+              <div className="font-bold text-brand-black leading-tight">
+                Build a Content Supply Chain
               </div>
-              <div className="text-xs text-gray-600 mt-1">{completedSteps.length}/{steps.length} steps</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Navigation Tabs */}
-      <div className="border-b-2 border-brand-black bg-white sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="flex gap-2 overflow-x-auto no-scrollbar py-2">
-            {sections.map(section => (
-              <button
-                key={section.id}
-                onClick={() => setActiveSection(section.id)}
-                className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all ${
-                  activeSection === section.id
-                    ? 'bg-brand-yellow border-2 border-brand-black'
-                    : 'bg-gray-100 border-2 border-transparent hover:border-brand-black'
+      {/* Content Container */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+
+        {/* Navigation Tabs */}
+        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-6 mb-6 border-b-2 border-gray-200">
+          {sections.map(section => (
+            <button
+              key={section.id}
+              onClick={() => setActiveTab(section.id)}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-bold whitespace-nowrap transition-all border-2 ${activeTab === section.id
+                ? 'bg-brand-yellow border-brand-black shadow-neo-sm'
+                : 'bg-white border-transparent hover:border-brand-black hover:bg-gray-50'
                 }`}
-              >
-                {section.icon} {section.label}
-              </button>
-            ))}
-          </div>
+            >
+              <span>{section.icon}</span> {section.label}
+            </button>
+          ))}
         </div>
-      </div>
 
-      {/* Content Area */}
-      <div className="max-w-7xl mx-auto px-8 py-8">
         <div className="grid grid-cols-12 gap-8">
-          {/* Main Content */}
           <div className="col-span-12 lg:col-span-8">
-            {activeSection === 'overview' && (
-              <OverviewSection />
+
+            {/* Overview & Video Section */}
+            {activeTab === 'overview' && (
+              <div className="space-y-8 animate-slide-up">
+                {/* Video Player Card */}
+                <div className="bg-black rounded-card overflow-hidden shadow-neo border-2 border-brand-black">
+                  <div className="aspect-video bg-gray-900 flex items-center justify-center relative">
+                    <div className="text-center">
+                      <p className="text-gray-500 mb-2">Video Placeholder</p>
+                      <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto cursor-pointer hover:bg-white/20 hover:scale-110 transition-all">
+                        <Play className="w-8 h-8 text-white fill-current" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4 bg-gray-900 text-white border-t border-gray-800 flex justify-between items-center">
+                    <div>
+                      <h3 className="font-bold">Content Engine</h3>
+                      <p className="text-xs text-gray-400">Building your infinite supply chain.</p>
+                    </div>
+                    <button className="text-xs font-bold bg-white/10 hover:bg-white/20 px-3 py-1 rounded transition-colors">
+                      Mark Complete
+                    </button>
+                  </div>
+                </div>
+
+                <OverviewSection />
+              </div>
             )}
-            
-            {activeSection === 'voice' && (
-              <VoiceSection steps={steps.filter(s => s.id === 'step1' || s.id === 'step2')} completedSteps={completedSteps} toggleStep={toggleStep} />
+
+            {activeTab === 'voice' && (
+              <div className="animate-slide-up">
+                <VoiceSection steps={steps.filter(s => s.id === 'step1' || s.id === 'step2')} completedSteps={completedSteps} toggleStep={toggleStep} />
+              </div>
             )}
-            
-            {activeSection === 'pillars' && (
-              <PillarsSection steps={steps.filter(s => s.id === 'step3' || s.id === 'step4')} completedSteps={completedSteps} toggleStep={toggleStep} />
+
+            {activeTab === 'pillars' && (
+              <div className="animate-slide-up">
+                <PillarsSection steps={steps.filter(s => s.id === 'step3' || s.id === 'step4')} completedSteps={completedSteps} toggleStep={toggleStep} />
+              </div>
             )}
-            
-            {activeSection === 'repurposing' && (
-              <RepurposingSection steps={steps.filter(s => s.id === 'step5' || s.id === 'step6')} completedSteps={completedSteps} toggleStep={toggleStep} />
+
+            {activeTab === 'repurposing' && (
+              <div className="animate-slide-up">
+                <RepurposingSection steps={steps.filter(s => s.id === 'step5' || s.id === 'step6')} completedSteps={completedSteps} toggleStep={toggleStep} />
+              </div>
             )}
-            
-            {activeSection === 'workflow' && (
-              <WorkflowSection steps={steps.filter(s => s.id === 'step7' || s.id === 'step8')} completedSteps={completedSteps} toggleStep={toggleStep} />
+
+            {activeTab === 'workflow' && (
+              <div className="animate-slide-up">
+                <WorkflowSection steps={steps.filter(s => s.id === 'step7' || s.id === 'step8')} completedSteps={completedSteps} toggleStep={toggleStep} />
+              </div>
             )}
-            
-            {activeSection === 'prompts' && (
-              <PromptsSection copyToClipboard={copyToClipboard} copiedPrompt={copiedPrompt} />
+
+            {activeTab === 'prompts' && (
+              <div className="animate-slide-up">
+                <PromptsSection copyToClipboard={copyToClipboard} copiedPrompt={copiedPrompt} />
+              </div>
             )}
-            
-            {activeSection === 'resources' && (
-              <ResourcesSection />
+
+            {activeTab === 'resources' && (
+              <div className="animate-slide-up">
+                <ResourcesSection />
+              </div>
             )}
           </div>
 
-          {/* Sidebar */}
-          <div className="col-span-12 lg:col-span-4">
-            <QuickInfoCard />
-            <ChecklistCard steps={steps} completedSteps={completedSteps} toggleStep={toggleStep} />
+          {/* Sidebar Stats */}
+          <div className="col-span-12 lg:col-span-4 space-y-6">
+            <div className="bg-white border-2 border-brand-black rounded-card p-6 sticky top-24">
+              <h3 className="font-bold text-lg mb-4">Module Details</h3>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <Clock className="w-5 h-5 text-gray-400" />
+                  <div>
+                    <p className="text-xs text-gray-500 font-bold uppercase">Time</p>
+                    <p className="font-bold">3-4 hours</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Target className="w-5 h-5 text-gray-400" />
+                  <div>
+                    <p className="text-xs text-gray-500 font-bold uppercase">Difficulty</p>
+                    <p className="font-bold text-green-600">Beginner</p>
+                  </div>
+                </div>
+              </div>
+
+              <hr className="my-6 border-gray-200" />
+
+              <button className="w-full py-3 bg-brand-black text-white font-bold rounded-lg hover:bg-gray-800 transition-colors">
+                Download Resources
+              </button>
+
+              <div className="mt-6 p-4 bg-gray-100 rounded-lg text-sm">
+                <p className="font-bold mb-2">Prerequisites:</p>
+                <ul className="list-disc list-inside text-gray-600">
+                  <li>Module 2 Completed</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -150,24 +204,24 @@ const Module3Content = ({ onBack }) => {
 const OverviewSection = () => (
   <div className="bg-white border-2 border-brand-black rounded-card p-8">
     <h2 className="text-3xl font-bold mb-6">Consistency is the Killer</h2>
-    
+
     <div className="prose max-w-none">
       <p className="text-lg mb-4">
-        The #1 reason businesses fail at content marketing isn't a lack of creativity; it's a lack of <strong>consistency</strong>. 
+        The #1 reason businesses fail at content marketing isn't a lack of creativity; it's a lack of <strong>consistency</strong>.
         You post three times in a "motivated" week, then ghost your audience for a month when business gets busy.
       </p>
-      
+
       <div className="bg-brand-yellow/20 border-2 border-brand-black rounded-xl p-6 my-6">
         <p className="font-bold text-lg mb-2">💡 AI solves the consistency problem</p>
         <p>But most people use it wrong. They ask ChatGPT to "Write me 10 tweets about real estate," and they get garbage that sounds like a robot.</p>
       </div>
-      
+
       <p className="text-lg mb-4">
-        In this module, we're building a <strong>Content Supply Chain</strong>. We will not ask the AI to "be creative" 
-        from scratch. We will use it to multiply your best ideas, clone your unique voice, and format everything for 
+        In this module, we're building a <strong>Content Supply Chain</strong>. We will not ask the AI to "be creative"
+        from scratch. We will use it to multiply your best ideas, clone your unique voice, and format everything for
         every platform instantly.
       </p>
-      
+
       <div className="bg-brand-purple/10 border-2 border-brand-black rounded-xl p-6 my-6">
         <h3 className="text-xl font-bold mb-3">🎯 What You'll Build:</h3>
         <ul className="space-y-2">
@@ -178,7 +232,7 @@ const OverviewSection = () => (
           <li>✅ Visual generation for scroll-stopping posts</li>
         </ul>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
         <div className="border-2 border-red-500 bg-red-50 rounded-xl p-4">
           <div className="text-2xl mb-2">❌</div>
@@ -201,7 +255,7 @@ const OverviewSection = () => (
           </ul>
         </div>
       </div>
-      
+
       <h3 className="text-2xl font-bold mt-8 mb-4">Prerequisites</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="border-2 border-brand-black rounded-xl p-4">
@@ -225,15 +279,15 @@ const VoiceSection = ({ steps, completedSteps, toggleStep }) => (
     <div className="bg-white border-2 border-brand-black rounded-card p-8">
       <h2 className="text-3xl font-bold mb-4">Step 1: The Brand Voice Analyzer</h2>
       <p className="text-lg text-gray-700 mb-6">
-        Before we write a single post, we must define <strong>how</strong> you sound. If you skip this, 
+        Before we write a single post, we must define <strong>how</strong> you sound. If you skip this,
         your content will sound like every other AI-generated account.
       </p>
-      
+
       <div className="bg-brand-orange/10 border-2 border-brand-black rounded-xl p-6 mb-6">
         <h3 className="text-xl font-bold mb-3">The Strategy:</h3>
         <p>We will feed your past content into the AI and ask it to reverse-engineer your style.</p>
       </div>
-      
+
       <div className="space-y-4 mb-6">
         <div className="border-2 border-brand-black rounded-xl p-6 bg-blue-50">
           <div className="flex items-center gap-3 mb-3">
@@ -242,7 +296,7 @@ const VoiceSection = ({ steps, completedSteps, toggleStep }) => (
           </div>
           <p>Copy the text from your 3 best-performing posts/emails.</p>
         </div>
-        
+
         <div className="border-2 border-brand-black rounded-xl p-6 bg-yellow-50">
           <div className="flex items-center gap-3 mb-3">
             <div className="bg-brand-yellow text-brand-black w-10 h-10 rounded-full flex items-center justify-center font-bold">2</div>
@@ -250,7 +304,7 @@ const VoiceSection = ({ steps, completedSteps, toggleStep }) => (
           </div>
           <p>Use <strong>Prompt 1 (The Voice Decoder)</strong> from the Prompts section.</p>
         </div>
-        
+
         <div className="border-2 border-brand-black rounded-xl p-6 bg-green-50">
           <div className="flex items-center gap-3 mb-3">
             <div className="bg-green-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">3</div>
@@ -258,19 +312,19 @@ const VoiceSection = ({ steps, completedSteps, toggleStep }) => (
           </div>
           <p className="mb-3">The AI will give you a "Style Guide" paragraph describing your tone.</p>
           <div className="bg-white border border-gray-300 rounded p-3 text-sm italic">
-            Example: "Direct, witty, uses short sentences, avoids jargon, frequently uses metaphors, 
+            Example: "Direct, witty, uses short sentences, avoids jargon, frequently uses metaphors,
             conversational tone with occasional humor"
           </div>
         </div>
       </div>
-      
+
       <div className="bg-red-50 border-2 border-red-500 rounded-xl p-6 mb-6">
         <p className="font-bold text-red-700 mb-2">⚠️ Critical Step:</p>
         <p className="text-red-700">
           <strong>Save this Style Guide!</strong> You will paste this into the "Context" section of every future content prompt.
         </p>
       </div>
-      
+
       <div className="space-y-4">
         {steps.map(step => (
           <StepCheckbox key={step.id} step={step} completed={completedSteps.includes(step.id)} onToggle={toggleStep} />
@@ -288,7 +342,7 @@ const PillarsSection = ({ steps, completedSteps, toggleStep }) => (
       <p className="text-lg text-gray-700 mb-6">
         Don't just "post stuff." Professional accounts rotate between 3-4 core themes (Pillars).
       </p>
-      
+
       <div className="bg-brand-purple/20 border-2 border-brand-black rounded-xl p-6 mb-6">
         <h4 className="font-bold text-lg mb-3">Example (Fitness Coach):</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -309,30 +363,30 @@ const PillarsSection = ({ steps, completedSteps, toggleStep }) => (
           </div>
         </div>
       </div>
-      
+
       <h3 className="text-2xl font-bold mb-4">The Workflow:</h3>
       <div className="space-y-4 mb-6">
         <div className="border-2 border-brand-black rounded-xl p-6 bg-gray-50">
           <p className="font-bold mb-2">1. Define your Pillars</p>
           <p className="text-sm text-gray-600">Pick your top 3 themes that align with your business goals and audience interests.</p>
         </div>
-        
+
         <div className="border-2 border-brand-black rounded-xl p-6 bg-gray-50">
           <p className="font-bold mb-2">2. The "Ideation Avalanche"</p>
           <p className="text-sm text-gray-600 mb-2">Use <strong>Prompt 2 (The Idea Matrix)</strong>. Ask the AI to generate 10 specific, controversial, or educational sub-topics for each pillar.</p>
         </div>
-        
+
         <div className="border-2 border-brand-black rounded-xl p-6 bg-gray-50">
           <p className="font-bold mb-2">3. Select</p>
           <p className="text-sm text-gray-600">Pick the best 10 ideas total. You don't need infinite ideas; you need 10 good ones that we will repurpose.</p>
         </div>
       </div>
-      
+
       <div className="bg-brand-yellow/20 border-2 border-brand-black rounded-xl p-6 mb-6">
         <p className="font-bold mb-2">💡 Pro Tip:</p>
         <p>Your pillars should answer: "What do I want to be known for?" Not "What can I talk about?"</p>
       </div>
-      
+
       <div className="space-y-4">
         {steps.map(step => (
           <StepCheckbox key={step.id} step={step} completed={completedSteps.includes(step.id)} onToggle={toggleStep} />
@@ -352,18 +406,18 @@ const RepurposingSection = ({ steps, completedSteps, toggleStep }) => (
       <p className="text-lg text-gray-700 mb-6">
         This is where you save 20 hours a week. We're going to take <strong>one</strong> core idea and turn it into <strong>five</strong> assets.
       </p>
-      
+
       <div className="bg-brand-orange/10 border-2 border-brand-black rounded-xl p-6 mb-6">
         <h3 className="text-xl font-bold mb-3">The "Waterfall" Method:</h3>
         <p>Always start with the "Rich" format (Long-form), then cut it down.</p>
       </div>
-      
+
       <div className="mb-6">
         <div className="bg-brand-blue/20 border-2 border-brand-black rounded-xl p-6 mb-4">
           <h4 className="font-bold text-lg mb-2">📥 Input:</h4>
           <p>A rough script, a brain dump, or a blog post draft about "Topic A."</p>
         </div>
-        
+
         <div className="space-y-3">
           <div className="flex items-center gap-3 p-4 bg-white border-2 border-brand-black rounded-xl">
             <div className="bg-red-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
@@ -372,7 +426,7 @@ const RepurposingSection = ({ steps, completedSteps, toggleStep }) => (
               <p className="text-sm text-gray-600">Hook, Body, CTA</p>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-3 p-4 bg-white border-2 border-brand-black rounded-xl">
             <div className="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
             <div>
@@ -380,7 +434,7 @@ const RepurposingSection = ({ steps, completedSteps, toggleStep }) => (
               <p className="text-sm text-gray-600">Broetry style</p>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-3 p-4 bg-white border-2 border-brand-black rounded-xl">
             <div className="bg-black text-white w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
             <div>
@@ -388,7 +442,7 @@ const RepurposingSection = ({ steps, completedSteps, toggleStep }) => (
               <p className="text-sm text-gray-600">Punchy, thread-style</p>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-3 p-4 bg-white border-2 border-brand-black rounded-xl">
             <div className="bg-pink-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0">4</div>
             <div>
@@ -396,7 +450,7 @@ const RepurposingSection = ({ steps, completedSteps, toggleStep }) => (
               <p className="text-sm text-gray-600">Casual + Hashtags</p>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-3 p-4 bg-white border-2 border-brand-black rounded-xl">
             <div className="bg-green-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0">5</div>
             <div>
@@ -406,18 +460,18 @@ const RepurposingSection = ({ steps, completedSteps, toggleStep }) => (
           </div>
         </div>
       </div>
-      
+
       <div className="bg-green-50 border-2 border-green-500 rounded-xl p-6 mb-6">
         <p className="font-bold text-green-700 mb-2">✨ The Magic:</p>
         <p className="text-green-700">
-          You execute this using <strong>Prompt 3 (The Repurposing Engine)</strong>. You paste your rough thought once, 
+          You execute this using <strong>Prompt 3 (The Repurposing Engine)</strong>. You paste your rough thought once,
           and the AI formats it for all five platforms simultaneously.
         </p>
       </div>
-      
+
       <h3 className="text-2xl font-bold mb-4 mt-8">Visuals (Brief Overview)</h3>
       <p className="mb-4">Text is only half the battle. You need scroll-stopping visuals.</p>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <div className="border-2 border-brand-black rounded-xl p-4 bg-gray-50">
           <h4 className="font-bold mb-2">🎨 Tools:</h4>
@@ -426,26 +480,26 @@ const RepurposingSection = ({ steps, completedSteps, toggleStep }) => (
             <li>• <strong>DALL-E 3</strong> (Inside ChatGPT Plus)</li>
           </ul>
         </div>
-        
+
         <div className="border-2 border-brand-black rounded-xl p-4 bg-gray-50">
           <h4 className="font-bold mb-2">🎯 Strategy:</h4>
           <p className="text-sm">Don't ask for "A picture of a computer." Ask for specific styles.</p>
         </div>
       </div>
-      
+
       <div className="bg-brand-purple/20 border-2 border-brand-black rounded-xl p-6 mb-6">
         <h4 className="font-bold mb-2">Example Prompt:</h4>
         <div className="bg-white border border-gray-300 rounded p-3 font-mono text-sm">
-          "Create a flat-vector illustration style image of a chaotic office desk, using my brand colors 
+          "Create a flat-vector illustration style image of a chaotic office desk, using my brand colors
           (Orange and Blue), minimal background, aspect ratio 16:9."
         </div>
       </div>
-      
+
       <div className="bg-brand-yellow/20 border-2 border-brand-black rounded-xl p-6 mb-6">
         <p className="font-bold mb-2">💡 Consistency Tip:</p>
         <p>Once you find a prompt style you like, use the same style keywords for <em>every</em> image to build brand recognition.</p>
       </div>
-      
+
       <div className="space-y-4">
         {steps.map(step => (
           <StepCheckbox key={step.id} step={step} completed={completedSteps.includes(step.id)} onToggle={toggleStep} />
@@ -463,7 +517,7 @@ const WorkflowSection = ({ steps, completedSteps, toggleStep }) => (
       <p className="text-lg text-gray-700 mb-6">
         Here's how you actually do this in real life:
       </p>
-      
+
       <div className="space-y-4 mb-6">
         <div className="border-2 border-brand-black rounded-xl p-6 bg-blue-50">
           <div className="flex items-start gap-4">
@@ -474,7 +528,7 @@ const WorkflowSection = ({ steps, completedSteps, toggleStep }) => (
             </div>
           </div>
         </div>
-        
+
         <div className="border-2 border-brand-black rounded-xl p-6 bg-purple-50">
           <div className="flex items-start gap-4">
             <div className="bg-brand-purple text-white px-4 py-2 rounded-full font-bold whitespace-nowrap">0:20 - 0:40</div>
@@ -484,7 +538,7 @@ const WorkflowSection = ({ steps, completedSteps, toggleStep }) => (
             </div>
           </div>
         </div>
-        
+
         <div className="border-2 border-brand-black rounded-xl p-6 bg-yellow-50">
           <div className="flex items-start gap-4">
             <div className="bg-brand-yellow text-brand-black px-4 py-2 rounded-full font-bold whitespace-nowrap">0:40 - 1:20</div>
@@ -494,7 +548,7 @@ const WorkflowSection = ({ steps, completedSteps, toggleStep }) => (
             </div>
           </div>
         </div>
-        
+
         <div className="border-2 border-brand-black rounded-xl p-6 bg-orange-50">
           <div className="flex items-start gap-4">
             <div className="bg-brand-orange text-white px-4 py-2 rounded-full font-bold whitespace-nowrap">1:20 - 1:40</div>
@@ -504,7 +558,7 @@ const WorkflowSection = ({ steps, completedSteps, toggleStep }) => (
             </div>
           </div>
         </div>
-        
+
         <div className="border-2 border-brand-black rounded-xl p-6 bg-green-50">
           <div className="flex items-start gap-4">
             <div className="bg-green-500 text-white px-4 py-2 rounded-full font-bold whitespace-nowrap">1:40 - 2:00</div>
@@ -515,14 +569,14 @@ const WorkflowSection = ({ steps, completedSteps, toggleStep }) => (
           </div>
         </div>
       </div>
-      
+
       <div className="bg-brand-purple/20 border-2 border-brand-black rounded-xl p-6 mb-6">
         <h3 className="text-xl font-bold mb-3">Optimization Tips:</h3>
         <div className="space-y-3">
           <div>
             <p className="font-bold mb-1">🔥 The "Trend Jacking" Method:</p>
-            <p className="text-sm">If big news hits your industry, paste the news article into ChatGPT and ask: 
-            "Summarize this and give me 3 distinct 'Hot Takes' on why this matters for [MY AUDIENCE]. Formatting: LinkedIn Post."</p>
+            <p className="text-sm">If big news hits your industry, paste the news article into ChatGPT and ask:
+              "Summarize this and give me 3 distinct 'Hot Takes' on why this matters for [MY AUDIENCE]. Formatting: LinkedIn Post."</p>
           </div>
           <div>
             <p className="font-bold mb-1">#️⃣ Hashtag Optimization:</p>
@@ -530,22 +584,22 @@ const WorkflowSection = ({ steps, completedSteps, toggleStep }) => (
           </div>
         </div>
       </div>
-      
+
       <h3 className="text-2xl font-bold mb-4">Troubleshooting</h3>
       <div className="space-y-3 mb-6">
         <div className="p-4 bg-red-50 border-2 border-red-500 rounded-xl">
           <p className="font-bold text-red-700 mb-2">Issue: The content sounds repetitive</p>
-          <p className="text-sm text-red-700">Fix: Your "Pillars" are too similar. Force the AI to vary the "Angle." 
-          Ask for one post that is a "Rant," one that is a "How-To," and one that is a "Story."</p>
+          <p className="text-sm text-red-700">Fix: Your "Pillars" are too similar. Force the AI to vary the "Angle."
+            Ask for one post that is a "Rant," one that is a "How-To," and one that is a "Story."</p>
         </div>
-        
+
         <div className="p-4 bg-yellow-50 border-2 border-yellow-500 rounded-xl">
           <p className="font-bold text-yellow-700 mb-2">Issue: The hooks are boring</p>
-          <p className="text-sm text-yellow-700">Fix: Use a specific "Hook prompt": "Rewrite the first sentence of these posts. 
-          Make them click-baity, open loops, or counter-intuitive statements."</p>
+          <p className="text-sm text-yellow-700">Fix: Use a specific "Hook prompt": "Rewrite the first sentence of these posts.
+            Make them click-baity, open loops, or counter-intuitive statements."</p>
         </div>
       </div>
-      
+
       <div className="space-y-4">
         {steps.map(step => (
           <StepCheckbox key={step.id} step={step} completed={completedSteps.includes(step.id)} onToggle={toggleStep} />
@@ -623,7 +677,7 @@ Style: Minimalist 3D render, isometric view, [BRAND COLORS] color palette, high 
           These are your content creation superpowers. Click to copy!
         </p>
       </div>
-      
+
       {prompts.map(prompt => (
         <div key={prompt.id} className="bg-white border-2 border-brand-black rounded-card p-6">
           <div className="flex justify-between items-start mb-3">
@@ -651,7 +705,7 @@ Style: Minimalist 3D render, isometric view, [BRAND COLORS] color palette, high 
 const ResourcesSection = () => (
   <div className="bg-white border-2 border-brand-black rounded-card p-8">
     <h2 className="text-3xl font-bold mb-6">Resources & Tools</h2>
-    
+
     <h3 className="text-2xl font-bold mb-4">Required Tools</h3>
     <div className="space-y-4 mb-8">
       <div className="p-4 border-2 border-brand-black rounded-xl bg-gray-50">
@@ -661,7 +715,7 @@ const ResourcesSection = () => (
           <span className="px-3 py-1 bg-white border border-gray-300 rounded-lg text-sm font-medium">Claude</span>
         </div>
       </div>
-      
+
       <div className="p-4 border-2 border-brand-black rounded-xl bg-gray-50">
         <h4 className="font-bold text-lg mb-2">🎨 Image Generation</h4>
         <div className="flex flex-wrap gap-2">
@@ -669,7 +723,7 @@ const ResourcesSection = () => (
           <span className="px-3 py-1 bg-white border border-gray-300 rounded-lg text-sm font-medium">Midjourney</span>
         </div>
       </div>
-      
+
       <div className="p-4 border-2 border-brand-black rounded-xl bg-gray-50">
         <h4 className="font-bold text-lg mb-2">📅 Scheduling Tools (Optional)</h4>
         <div className="flex flex-wrap gap-2">
@@ -679,7 +733,7 @@ const ResourcesSection = () => (
         </div>
       </div>
     </div>
-    
+
     <h3 className="text-2xl font-bold mb-4">Templates</h3>
     <div className="p-4 border-2 border-brand-black rounded-xl bg-brand-yellow/10 mb-8">
       <h4 className="font-bold mb-2">📊 Content Calendar Template</h4>
@@ -692,7 +746,7 @@ const ResourcesSection = () => (
         <span className="px-3 py-1 bg-white border-2 border-brand-black rounded-lg text-sm font-bold">Asset Link</span>
       </div>
     </div>
-    
+
     <h3 className="text-2xl font-bold mb-4">Related Modules</h3>
     <div className="space-y-3">
       <div className="p-4 bg-gray-100 border-2 border-brand-black rounded-xl">
@@ -709,15 +763,13 @@ const ResourcesSection = () => (
 
 // Helper Components
 const StepCheckbox = ({ step, completed, onToggle }) => (
-  <div 
+  <div
     onClick={() => onToggle(step.id)}
-    className={`flex items-center gap-3 p-4 border-2 border-brand-black rounded-xl cursor-pointer transition-all ${
-      completed ? 'bg-green-100' : 'bg-white hover:bg-gray-50'
-    }`}
+    className={`flex items-center gap-3 p-4 border-2 border-brand-black rounded-xl cursor-pointer transition-all ${completed ? 'bg-green-100' : 'bg-white hover:bg-gray-50'
+      }`}
   >
-    <div className={`w-6 h-6 rounded border-2 border-brand-black flex items-center justify-center font-bold ${
-      completed ? 'bg-green-500 text-white' : 'bg-white'
-    }`}>
+    <div className={`w-6 h-6 rounded border-2 border-brand-black flex items-center justify-center font-bold ${completed ? 'bg-green-500 text-white' : 'bg-white'
+      }`}>
       {completed && '✓'}
     </div>
     <span className={`flex-1 ${completed ? 'line-through text-gray-500' : 'font-medium'}`}>

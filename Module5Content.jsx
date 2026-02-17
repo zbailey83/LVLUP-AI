@@ -16,7 +16,7 @@ const Module5Content = ({ onBack }) => {
     return (
         <div className="min-h-screen bg-brand-offwhite font-kodchassan animate-fade-in">
             {/* Header */}
-            <div className="bg-brand-orange border-b-2 border-brand-black sticky top-0 z-20">
+            <div className="bg-brand-purple border-b-2 border-brand-black sticky top-0 z-20">
                 <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-6">
                     <button
                         onClick={onBack}
@@ -54,8 +54,8 @@ const Module5Content = ({ onBack }) => {
                             key={section.id}
                             onClick={() => setActiveTab(section.id)}
                             className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-bold whitespace-nowrap transition-all border-2 ${activeTab === section.id
-                                    ? 'bg-brand-yellow border-brand-black shadow-neo-sm'
-                                    : 'bg-white border-transparent hover:border-brand-black hover:bg-gray-50'
+                                ? 'bg-brand-yellow border-brand-black shadow-neo-sm'
+                                : 'bg-white border-transparent hover:border-brand-black hover:bg-gray-50'
                                 }`}
                         >
                             <span>{section.icon}</span> {section.label}

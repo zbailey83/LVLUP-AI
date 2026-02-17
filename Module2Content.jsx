@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { ArrowLeft, Play, Clock, Target, CheckCircle, Copy, Check, Download, ExternalLink } from 'lucide-react';
 
 const Module2Content = ({ onBack }) => {
-  const [activeSection, setActiveSection] = useState('overview');
+  const [activeTab, setActiveTab] = useState('overview');
   const [completedSteps, setCompletedSteps] = useState([]);
   const [copiedPrompt, setCopiedPrompt] = useState(null);
 
@@ -20,7 +21,7 @@ const Module2Content = ({ onBack }) => {
   };
 
   const sections = [
-    { id: 'overview', label: 'Overview', icon: '📋' },
+    { id: 'overview', label: 'Overview & Video', icon: '📺' },
     { id: 'framework', label: 'Mega-Prompt Framework', icon: '🎯' },
     { id: 'techniques', label: 'Advanced Techniques', icon: '⚡' },
     { id: 'exercises', label: 'Exercises', icon: '💪' },
@@ -39,101 +40,152 @@ const Module2Content = ({ onBack }) => {
     { id: 'step8', title: 'Save your best prompts to library' }
   ];
 
-  const progress = Math.round((completedSteps.length / steps.length) * 100);
-
   return (
-    <div className="min-h-screen bg-brand-offwhite">
+    <div className="min-h-screen bg-brand-offwhite font-kodchassan animate-fade-in">
       {/* Header */}
-      <div className="bg-brand-orange border-b-2 border-brand-black">
-        <div className="max-w-7xl mx-auto px-8 py-6">
-          <button 
+      <div className="bg-brand-orange border-b-2 border-brand-black sticky top-0 z-20">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-6">
+          <button
             onClick={onBack}
-            className="mb-4 px-4 py-2 bg-white border-2 border-brand-black rounded-full font-bold hover:bg-brand-yellow transition-colors"
+            className="flex items-center gap-2 mb-4 text-white font-bold hover:underline"
           >
-            ← Back to Dashboard
+            <ArrowLeft className="w-5 h-5" /> Back to Dashboard
           </button>
-          
-          <div className="flex items-start justify-between flex-wrap gap-4">
+
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span className="inline-block px-3 py-1 bg-brand-black text-white text-xs font-bold rounded-lg mb-2">
                 CORE TRACK • MODULE 2
               </span>
-              <h1 className="text-4xl font-bold text-white mb-2">Prompting Mastery Essentials</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Prompting Mastery Essentials</h1>
               <p className="text-white/90 text-lg font-medium">"The Science of Perfect Output"</p>
             </div>
-            
-            <div className="bg-white border-2 border-brand-black rounded-xl p-4 min-w-[200px]">
-              <div className="text-xs font-bold text-gray-500 mb-1">YOUR PROGRESS</div>
-              <div className="flex items-center gap-3">
-                <div className="flex-1 bg-gray-200 h-3 rounded-full border border-brand-black">
-                  <div 
-                    className="bg-brand-orange h-full rounded-full transition-all duration-500"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-                <span className="text-2xl font-bold">{progress}%</span>
+
+            <div className="bg-white border-2 border-brand-black rounded-xl p-3 min-w-[150px] shadow-neo-sm">
+              <div className="text-xs font-bold text-gray-500 mb-1">KEY OUTCOME</div>
+              <div className="font-bold text-brand-black leading-tight">
+                Master "Structural Prompting"
               </div>
-              <div className="text-xs text-gray-600 mt-1">{completedSteps.length}/{steps.length} steps</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Navigation Tabs */}
-      <div className="border-b-2 border-brand-black bg-white sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="flex gap-2 overflow-x-auto no-scrollbar py-2">
-            {sections.map(section => (
-              <button
-                key={section.id}
-                onClick={() => setActiveSection(section.id)}
-                className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all ${
-                  activeSection === section.id
-                    ? 'bg-brand-yellow border-2 border-brand-black'
-                    : 'bg-gray-100 border-2 border-transparent hover:border-brand-black'
+      {/* Content Container */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+
+        {/* Navigation Tabs */}
+        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-6 mb-6 border-b-2 border-gray-200">
+          {sections.map(section => (
+            <button
+              key={section.id}
+              onClick={() => setActiveTab(section.id)}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-bold whitespace-nowrap transition-all border-2 ${activeTab === section.id
+                ? 'bg-brand-yellow border-brand-black shadow-neo-sm'
+                : 'bg-white border-transparent hover:border-brand-black hover:bg-gray-50'
                 }`}
-              >
-                {section.icon} {section.label}
-              </button>
-            ))}
-          </div>
+            >
+              <span>{section.icon}</span> {section.label}
+            </button>
+          ))}
         </div>
-      </div>
 
-      {/* Content Area */}
-      <div className="max-w-7xl mx-auto px-8 py-8">
         <div className="grid grid-cols-12 gap-8">
-          {/* Main Content */}
           <div className="col-span-12 lg:col-span-8">
-            {activeSection === 'overview' && (
-              <OverviewSection />
+
+            {/* Overview & Video Section */}
+            {activeTab === 'overview' && (
+              <div className="space-y-8 animate-slide-up">
+                {/* Video Player Card */}
+                <div className="bg-black rounded-card overflow-hidden shadow-neo border-2 border-brand-black">
+                  <div className="aspect-video bg-gray-900 flex items-center justify-center relative">
+                    <div className="text-center">
+                      <p className="text-gray-500 mb-2">Video Placeholder</p>
+                      <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto cursor-pointer hover:bg-white/20 hover:scale-110 transition-all">
+                        <Play className="w-8 h-8 text-white fill-current" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4 bg-gray-900 text-white border-t border-gray-800 flex justify-between items-center">
+                    <div>
+                      <h3 className="font-bold">Prompting Mastery</h3>
+                      <p className="text-xs text-gray-400">The science of perfect output.</p>
+                    </div>
+                    <button className="text-xs font-bold bg-white/10 hover:bg-white/20 px-3 py-1 rounded transition-colors">
+                      Mark Complete
+                    </button>
+                  </div>
+                </div>
+
+                <OverviewSection />
+              </div>
             )}
-            
-            {activeSection === 'framework' && (
-              <FrameworkSection />
+
+            {activeTab === 'framework' && (
+              <div className="animate-slide-up">
+                <FrameworkSection />
+              </div>
             )}
-            
-            {activeSection === 'techniques' && (
-              <TechniquesSection />
+
+            {activeTab === 'techniques' && (
+              <div className="animate-slide-up">
+                <TechniquesSection />
+              </div>
             )}
-            
-            {activeSection === 'exercises' && (
-              <ExercisesSection steps={steps.filter(s => s.id.includes('step3') || s.id.includes('step4'))} completedSteps={completedSteps} toggleStep={toggleStep} />
+
+            {activeTab === 'exercises' && (
+              <div className="animate-slide-up">
+                <ExercisesSection steps={steps.filter(s => s.id.includes('step3') || s.id.includes('step4'))} completedSteps={completedSteps} toggleStep={toggleStep} />
+              </div>
             )}
-            
-            {activeSection === 'prompts' && (
-              <PromptsSection copyToClipboard={copyToClipboard} copiedPrompt={copiedPrompt} />
+
+            {activeTab === 'prompts' && (
+              <div className="animate-slide-up">
+                <PromptsSection copyToClipboard={copyToClipboard} copiedPrompt={copiedPrompt} />
+              </div>
             )}
-            
-            {activeSection === 'resources' && (
-              <ResourcesSection />
+
+            {activeTab === 'resources' && (
+              <div className="animate-slide-up">
+                <ResourcesSection />
+              </div>
             )}
           </div>
 
-          {/* Sidebar */}
-          <div className="col-span-12 lg:col-span-4">
-            <QuickInfoCard />
-            <ChecklistCard steps={steps} completedSteps={completedSteps} toggleStep={toggleStep} />
+          {/* Sidebar Stats */}
+          <div className="col-span-12 lg:col-span-4 space-y-6">
+            <div className="bg-white border-2 border-brand-black rounded-card p-6 sticky top-24">
+              <h3 className="font-bold text-lg mb-4">Module Details</h3>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <Clock className="w-5 h-5 text-gray-400" />
+                  <div>
+                    <p className="text-xs text-gray-500 font-bold uppercase">Time</p>
+                    <p className="font-bold">2-3 hours</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Target className="w-5 h-5 text-gray-400" />
+                  <div>
+                    <p className="text-xs text-gray-500 font-bold uppercase">Difficulty</p>
+                    <p className="font-bold text-green-600">Beginner</p>
+                  </div>
+                </div>
+              </div>
+
+              <hr className="my-6 border-gray-200" />
+
+              <button className="w-full py-3 bg-brand-black text-white font-bold rounded-lg hover:bg-gray-800 transition-colors">
+                Download Resources
+              </button>
+
+              <div className="mt-6 p-4 bg-gray-100 rounded-lg text-sm">
+                <p className="font-bold mb-2">Prerequisites:</p>
+                <ul className="list-disc list-inside text-gray-600">
+                  <li>Module 1 Completed</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -145,24 +197,24 @@ const Module2Content = ({ onBack }) => {
 const OverviewSection = () => (
   <div className="bg-white border-2 border-brand-black rounded-card p-8">
     <h2 className="text-3xl font-bold mb-6">Stop "Chatting," Start Engineering</h2>
-    
+
     <div className="prose max-w-none">
       <p className="text-lg mb-4">
-        Most people treat AI like a magic 8-ball: they shake it (ask a vague question) and hope for a good answer. 
+        Most people treat AI like a magic 8-ball: they shake it (ask a vague question) and hope for a good answer.
         When the answer is mediocre, they blame the tool.
       </p>
-      
+
       <div className="bg-brand-yellow/20 border-2 border-brand-black rounded-xl p-6 my-6">
         <p className="font-bold text-lg mb-2">💡 The difference between a novice and a pro:</p>
         <p className="text-xl font-bold">Prompt Engineering</p>
       </div>
-      
+
       <p className="text-lg mb-4">
-        Think of the Large Language Model (LLM) not as a smart person, but as a <strong>very fast, 
-        literal-minded intern</strong>. If you tell an intern "Write a blog post about coffee," you'll 
+        Think of the Large Language Model (LLM) not as a smart person, but as a <strong>very fast,
+          literal-minded intern</strong>. If you tell an intern "Write a blog post about coffee," you'll
         get a generic Wikipedia-style article.
       </p>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
         <div className="border-2 border-red-500 bg-red-50 rounded-xl p-4">
           <div className="text-2xl mb-2">❌</div>
@@ -177,7 +229,7 @@ const OverviewSection = () => (
           <p className="text-xs text-gray-600 mt-2">Result: Usable, targeted content</p>
         </div>
       </div>
-      
+
       <div className="bg-brand-orange/10 border-2 border-brand-black rounded-xl p-6 my-6">
         <h3 className="text-xl font-bold mb-3">🎯 What You'll Master:</h3>
         <ul className="space-y-2">
@@ -188,9 +240,9 @@ const OverviewSection = () => (
           <li>✅ Professional-grade outputs 90% of the time</li>
         </ul>
       </div>
-      
+
       <p className="text-lg font-medium">
-        In this module, we're moving from <span className="line-through text-gray-400">"Conversational Prompting"</span> 
+        In this module, we're moving from <span className="line-through text-gray-400">"Conversational Prompting"</span>
         {' '}to <strong className="text-brand-orange">"Structural Prompting"</strong> (instructing like a coder).
       </p>
     </div>
@@ -203,14 +255,14 @@ const FrameworkSection = () => (
     <div className="bg-white border-2 border-brand-black rounded-card p-8">
       <h2 className="text-3xl font-bold mb-4">The "Mega-Prompt" Framework</h2>
       <p className="text-lg text-gray-700 mb-6">
-        A perfect prompt is not a sentence; it's a paragraph. To get consistent results, every major prompt 
+        A perfect prompt is not a sentence; it's a paragraph. To get consistent results, every major prompt
         must contain <strong>six specific components</strong>.
       </p>
-      
+
       <div className="bg-brand-purple/20 border-2 border-brand-black rounded-xl p-6 mb-6">
         <h3 className="text-2xl font-bold mb-4 text-center">The C.P.T.C.F.S. Protocol</h3>
       </div>
-      
+
       <div className="space-y-6">
         {/* Context */}
         <div className="border-2 border-brand-black rounded-xl p-6 bg-gray-50">
@@ -360,12 +412,12 @@ const TechniquesSection = () => (
       <p className="text-lg text-gray-700 mb-6">
         Beginners take the first answer the AI gives. <strong>Pros know the first answer is just a draft.</strong>
       </p>
-      
+
       <div className="bg-brand-orange/10 border-2 border-brand-black rounded-xl p-6 mb-6">
         <p className="font-bold text-lg mb-2">The Rule:</p>
         <p>Never use the first output (Turn 1) without at least two rounds of refinement.</p>
       </div>
-      
+
       <div className="space-y-4">
         <div className="border-2 border-brand-black rounded-xl p-6 bg-blue-50">
           <div className="flex items-center gap-3 mb-3">
@@ -374,7 +426,7 @@ const TechniquesSection = () => (
           </div>
           <p>You send your Mega-Prompt. The AI generates the draft.</p>
         </div>
-        
+
         <div className="border-2 border-brand-black rounded-xl p-6 bg-yellow-50">
           <div className="flex items-center gap-3 mb-3">
             <div className="bg-brand-yellow text-brand-black w-10 h-10 rounded-full flex items-center justify-center font-bold">2</div>
@@ -382,11 +434,11 @@ const TechniquesSection = () => (
           </div>
           <p className="mb-3">You critique the draft.</p>
           <div className="bg-white border border-gray-300 rounded p-3 font-mono text-sm">
-            "This is good, but the tone is too salesy. Rewrite the second paragraph to sound more educational. 
+            "This is good, but the tone is too salesy. Rewrite the second paragraph to sound more educational.
             Also, you missed the pricing details I mentioned."
           </div>
         </div>
-        
+
         <div className="border-2 border-brand-black rounded-xl p-6 bg-green-50">
           <div className="flex items-center gap-3 mb-3">
             <div className="bg-green-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">3</div>
@@ -398,11 +450,11 @@ const TechniquesSection = () => (
           </div>
         </div>
       </div>
-      
+
       <div className="bg-brand-yellow/20 border-2 border-brand-black rounded-xl p-6 mt-6">
         <p className="font-bold">💡 Why this matters:</p>
-        <p>The AI's "context window" (memory) gets better as the conversation gets deeper. It understands 
-        what you want more clearly in Turn 3 than in Turn 1.</p>
+        <p>The AI's "context window" (memory) gets better as the conversation gets deeper. It understands
+          what you want more clearly in Turn 3 than in Turn 1.</p>
       </div>
     </div>
 
@@ -412,11 +464,11 @@ const TechniquesSection = () => (
       <p className="text-lg text-gray-700 mb-6">
         If you want the AI to write like <strong>you</strong>, you must feed it samples of your writing.
       </p>
-      
+
       <div className="bg-gray-50 border-2 border-brand-black rounded-xl p-6 mb-6">
         <h4 className="font-bold text-lg mb-3">The Structure:</h4>
         <div className="bg-white border border-gray-300 rounded p-4 font-mono text-sm whitespace-pre-wrap">
-{`"I want you to write a tweet thread.
+          {`"I want you to write a tweet thread.
 
 Here is Example 1 of a good tweet: [PASTE TWEET]
 
@@ -425,7 +477,7 @@ Here is Example 2 of a good tweet: [PASTE TWEET]
 Now, using the same sentence structure, length, and humor style as the examples above, write a new tweet about [TOPIC]."`}
         </div>
       </div>
-      
+
       <div className="bg-green-50 border-2 border-green-500 rounded-xl p-6">
         <p className="font-bold text-green-700 mb-2">✨ Result:</p>
         <p className="text-green-700">This single technique solves 80% of "Tone" issues.</p>
@@ -436,18 +488,18 @@ Now, using the same sentence structure, length, and humor style as the examples 
     <div className="bg-white border-2 border-brand-black rounded-card p-8">
       <h2 className="text-3xl font-bold mb-4">Chain of Thought (CoT)</h2>
       <p className="text-lg text-gray-700 mb-6">
-        For complex logic or math problems, AI often hallucinates because it tries to guess the answer immediately. 
+        For complex logic or math problems, AI often hallucinates because it tries to guess the answer immediately.
         You can force it to "show its work."
       </p>
-      
+
       <div className="bg-brand-purple/20 border-2 border-brand-black rounded-xl p-6 mb-6">
         <h4 className="font-bold text-lg mb-3">The Instruction:</h4>
         <div className="bg-white border border-gray-300 rounded p-4 font-mono text-sm">
-          "Before you give me the final answer, think step-by-step. Break down your logic for each part of 
+          "Before you give me the final answer, think step-by-step. Break down your logic for each part of
           the problem. Then, present the final recommendation."
         </div>
       </div>
-      
+
       <div className="bg-blue-50 border-2 border-blue-500 rounded-xl p-6">
         <p className="font-bold text-blue-700 mb-2">📊 When to use it:</p>
         <p className="text-blue-700">Business strategy, pricing models, coding, or legal analysis.</p>
@@ -461,14 +513,14 @@ const ExercisesSection = ({ steps, completedSteps, toggleStep }) => (
   <div className="space-y-6">
     <div className="bg-white border-2 border-brand-black rounded-card p-8">
       <h2 className="text-3xl font-bold mb-6">Practice Exercises</h2>
-      
+
       {/* Exercise 1 */}
       <div className="mb-8">
         <div className="bg-brand-orange/20 border-2 border-brand-black rounded-xl p-6 mb-4">
           <h3 className="text-2xl font-bold mb-2">Exercise 1: The "Cold Outreach" Email</h3>
           <p className="font-medium">Goal: Write an email that gets a meeting.</p>
         </div>
-        
+
         <div className="space-y-4">
           <div className="border-2 border-brand-black rounded-xl p-4 bg-gray-50">
             <p className="font-bold mb-2">Step 1: Open a new chat</p>
@@ -494,7 +546,7 @@ const ExercisesSection = ({ steps, completedSteps, toggleStep }) => (
             <p className="text-sm text-gray-600">Did it follow the length limit? Is the tone right?</p>
           </div>
         </div>
-        
+
         {steps[0] && (
           <div className="mt-4">
             <StepCheckbox step={steps[0]} completed={completedSteps.includes(steps[0].id)} onToggle={toggleStep} />
@@ -508,7 +560,7 @@ const ExercisesSection = ({ steps, completedSteps, toggleStep }) => (
           <h3 className="text-2xl font-bold mb-2">Exercise 2: The "Meeting Summarizer"</h3>
           <p className="font-medium">Goal: Turn messy notes into a clean report.</p>
         </div>
-        
+
         <div className="space-y-4">
           <div className="border-2 border-brand-black rounded-xl p-4 bg-gray-50">
             <p className="font-bold mb-2">Step 1: Paste Notes</p>
@@ -517,12 +569,12 @@ const ExercisesSection = ({ steps, completedSteps, toggleStep }) => (
           <div className="border-2 border-brand-black rounded-xl p-4 bg-gray-50">
             <p className="font-bold mb-2">Step 2: The Prompt</p>
             <div className="bg-white border border-gray-300 rounded p-3 mt-2 font-mono text-sm">
-              "Organize these notes. Group them into: 1. Decisions Made, 2. Action Items (with owners), 
+              "Organize these notes. Group them into: 1. Decisions Made, 2. Action Items (with owners),
               3. Open Questions. Use a table format."
             </div>
           </div>
         </div>
-        
+
         {steps[1] && (
           <div className="mt-4">
             <StepCheckbox step={steps[1]} completed={completedSteps.includes(steps[1].id)} onToggle={toggleStep} />
@@ -588,7 +640,7 @@ Now, write a new paragraph about [NEW TOPIC] effectively cloning that exact styl
           Save these to your Prompt Library. Click to copy!
         </p>
       </div>
-      
+
       {prompts.map(prompt => (
         <div key={prompt.id} className="bg-white border-2 border-brand-black rounded-card p-6">
           <div className="flex justify-between items-start mb-3">
@@ -616,7 +668,7 @@ Now, write a new paragraph about [NEW TOPIC] effectively cloning that exact styl
 const ResourcesSection = () => (
   <div className="bg-white border-2 border-brand-black rounded-card p-8">
     <h2 className="text-3xl font-bold mb-6">Resources & Tools</h2>
-    
+
     <h3 className="text-2xl font-bold mb-4">Required Tools</h3>
     <div className="space-y-4 mb-8">
       <div className="p-4 border-2 border-brand-black rounded-xl bg-gray-50">
@@ -628,7 +680,7 @@ const ResourcesSection = () => (
           <span className="px-3 py-1 bg-white border border-gray-300 rounded-lg text-sm font-medium">Google Docs</span>
         </div>
       </div>
-      
+
       <div className="p-4 border-2 border-brand-black rounded-xl bg-gray-50">
         <h4 className="font-bold text-lg mb-2">⚡ Text Expander (Optional)</h4>
         <p className="text-sm text-gray-600 mb-3">Paste your "Mega-Prompt" template with a keyboard shortcut</p>
@@ -638,25 +690,25 @@ const ResourcesSection = () => (
         </div>
       </div>
     </div>
-    
+
     <h3 className="text-2xl font-bold mb-4">Troubleshooting Guide</h3>
     <div className="space-y-3">
       <div className="p-4 bg-red-50 border-2 border-red-500 rounded-xl">
         <p className="font-bold text-red-700 mb-2">Problem: The AI is "Hallucinating" (Making up facts)</p>
         <p className="text-sm text-red-700">Fix: Add the constraint: "If you do not know the specific answer, state 'I do not have that information' rather than guessing."</p>
       </div>
-      
+
       <div className="p-4 bg-yellow-50 border-2 border-yellow-500 rounded-xl">
         <p className="font-bold text-yellow-700 mb-2">Problem: The AI is being lazy (short, incomplete answers)</p>
         <p className="text-sm text-yellow-700">Fix: The "God Mode" trick. Tell the AI: "This task is vital for my career. Take a deep breath and do this step-by-step. I need high-effort output."</p>
       </div>
-      
+
       <div className="p-4 bg-blue-50 border-2 border-blue-500 rounded-xl">
         <p className="font-bold text-blue-700 mb-2">Problem: The AI forgets what you told it 10 messages ago</p>
         <p className="text-sm text-blue-700">Fix: LLMs have limited memory. If a chat gets too long, start a fresh one and paste a summary of the previous chat as context.</p>
       </div>
     </div>
-    
+
     <h3 className="text-2xl font-bold mt-8 mb-4">Related Modules</h3>
     <div className="space-y-3">
       <div className="p-4 bg-gray-100 border-2 border-brand-black rounded-xl">
@@ -673,15 +725,13 @@ const ResourcesSection = () => (
 
 // Helper Components
 const StepCheckbox = ({ step, completed, onToggle }) => (
-  <div 
+  <div
     onClick={() => onToggle(step.id)}
-    className={`flex items-center gap-3 p-4 border-2 border-brand-black rounded-xl cursor-pointer transition-all ${
-      completed ? 'bg-green-100' : 'bg-white hover:bg-gray-50'
-    }`}
+    className={`flex items-center gap-3 p-4 border-2 border-brand-black rounded-xl cursor-pointer transition-all ${completed ? 'bg-green-100' : 'bg-white hover:bg-gray-50'
+      }`}
   >
-    <div className={`w-6 h-6 rounded border-2 border-brand-black flex items-center justify-center font-bold ${
-      completed ? 'bg-green-500 text-white' : 'bg-white'
-    }`}>
+    <div className={`w-6 h-6 rounded border-2 border-brand-black flex items-center justify-center font-bold ${completed ? 'bg-green-500 text-white' : 'bg-white'
+      }`}>
       {completed && '✓'}
     </div>
     <span className={`flex-1 ${completed ? 'line-through text-gray-500' : 'font-medium'}`}>

@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { ArrowLeft, Play, Clock, Target, CheckCircle, Copy, Check, Download, ExternalLink } from 'lucide-react';
 
 const Module4Content = ({ onBack }) => {
-  const [activeSection, setActiveSection] = useState('overview');
+  const [activeTab, setActiveTab] = useState('overview');
   const [completedSteps, setCompletedSteps] = useState([]);
   const [copiedPrompt, setCopiedPrompt] = useState(null);
 
@@ -20,7 +21,7 @@ const Module4Content = ({ onBack }) => {
   };
 
   const sections = [
-    { id: 'overview', label: 'Overview', icon: '🤖' },
+    { id: 'overview', label: 'Overview & Video', icon: '📺' },
     { id: 'phase1', label: 'Phase 1: Setup', icon: '🏗️' },
     { id: 'phase2', label: 'Phase 2: Intelligence', icon: '🧠' },
     { id: 'phase3', label: 'Phase 3: Action', icon: '⚡' },
@@ -38,96 +39,152 @@ const Module4Content = ({ onBack }) => {
     { id: 'step7', phase: 'phase3', title: 'Run "High Value" Test' }
   ];
 
-  const progress = Math.round((completedSteps.length / steps.length) * 100);
-
   return (
-    <div className="min-h-screen bg-brand-offwhite">
+    <div className="min-h-screen bg-brand-offwhite font-kodchassan animate-fade-in">
       {/* Header */}
-      <div className="bg-brand-orange border-b-2 border-brand-black">
-        <div className="max-w-7xl mx-auto px-8 py-6">
+      <div className="bg-brand-orange border-b-2 border-brand-black sticky top-0 z-20">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-6">
           <button
             onClick={onBack}
-            className="mb-4 px-4 py-2 bg-white border-2 border-brand-black rounded-full font-bold hover:bg-brand-yellow transition-colors"
+            className="flex items-center gap-2 mb-4 text-white font-bold hover:underline"
           >
-            ← Back to Dashboard
+            <ArrowLeft className="w-5 h-5" /> Back to Dashboard
           </button>
 
-          <div className="flex items-start justify-between flex-wrap gap-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span className="inline-block px-3 py-1 bg-brand-black text-white text-xs font-bold rounded-lg mb-2">
                 CORE TRACK • MODULE 4
               </span>
-              <h1 className="text-4xl font-bold text-white mb-2">Your First Automation Blueprint</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Your First Automation Blueprint</h1>
               <p className="text-white/90 text-lg font-medium">"The Invisible Employee"</p>
             </div>
 
-            <div className="bg-white border-2 border-brand-black rounded-xl p-4 min-w-[200px]">
-              <div className="text-xs font-bold text-gray-500 mb-1">YOUR PROGRESS</div>
-              <div className="flex items-center gap-3">
-                <div className="flex-1 bg-gray-200 h-3 rounded-full border border-brand-black">
-                  <div
-                    className="bg-brand-orange h-full rounded-full transition-all duration-500"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-                <span className="text-2xl font-bold">{progress}%</span>
+            <div className="bg-white border-2 border-brand-black rounded-xl p-3 min-w-[150px] shadow-neo-sm">
+              <div className="text-xs font-bold text-gray-500 mb-1">KEY OUTCOME</div>
+              <div className="font-bold text-brand-black leading-tight">
+                Build "Smart Lead Processor"
               </div>
-              <div className="text-xs text-gray-600 mt-1">{completedSteps.length}/{steps.length} steps</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Navigation Tabs */}
-      <div className="border-b-2 border-brand-black bg-white sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="flex gap-2 overflow-x-auto no-scrollbar py-2">
-            {sections.map(section => (
-              <button
-                key={section.id}
-                onClick={() => setActiveSection(section.id)}
-                className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all ${activeSection === section.id
-                    ? 'bg-brand-yellow border-2 border-brand-black'
-                    : 'bg-gray-100 border-2 border-transparent hover:border-brand-black'
-                  }`}
-              >
-                {section.icon} {section.label}
-              </button>
-            ))}
-          </div>
+      {/* Content Container */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+
+        {/* Navigation Tabs */}
+        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-6 mb-6 border-b-2 border-gray-200">
+          {sections.map(section => (
+            <button
+              key={section.id}
+              onClick={() => setActiveTab(section.id)}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-bold whitespace-nowrap transition-all border-2 ${activeTab === section.id
+                ? 'bg-brand-yellow border-brand-black shadow-neo-sm'
+                : 'bg-white border-transparent hover:border-brand-black hover:bg-gray-5'
+                }`}
+            >
+              <span>{section.icon}</span> {section.label}
+            </button>
+          ))}
         </div>
-      </div>
 
-      {/* Content Area */}
-      <div className="max-w-7xl mx-auto px-8 py-8">
         <div className="grid grid-cols-12 gap-8">
-          {/* Main Content */}
           <div className="col-span-12 lg:col-span-8">
-            {activeSection === 'overview' && <OverviewSection />}
 
-            {activeSection === 'phase1' && (
-              <Phase1Section steps={steps.filter(s => s.phase === 'phase1')} completedSteps={completedSteps} toggleStep={toggleStep} />
+            {/* Overview & Video Section */}
+            {activeTab === 'overview' && (
+              <div className="space-y-8 animate-slide-up">
+                {/* Video Player Card */}
+                <div className="bg-black rounded-card overflow-hidden shadow-neo border-2 border-brand-black">
+                  <div className="aspect-video bg-gray-900 flex items-center justify-center relative">
+                    <div className="text-center">
+                      <p className="text-gray-500 mb-2">Video Placeholder</p>
+                      <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto cursor-pointer hover:bg-white/20 hover:scale-110 transition-all">
+                        <Play className="w-8 h-8 text-white fill-current" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4 bg-gray-900 text-white border-t border-gray-800 flex justify-between items-center">
+                    <div>
+                      <h3 className="font-bold">Automation Blueprint</h3>
+                      <p className="text-xs text-gray-400">The Invisible Employee setup.</p>
+                    </div>
+                    <button className="text-xs font-bold bg-white/10 hover:bg-white/20 px-3 py-1 rounded transition-colors">
+                      Mark Complete
+                    </button>
+                  </div>
+                </div>
+
+                <OverviewSection />
+              </div>
             )}
 
-            {activeSection === 'phase2' && (
-              <Phase2Section steps={steps.filter(s => s.phase === 'phase2')} completedSteps={completedSteps} toggleStep={toggleStep} />
+            {activeTab === 'phase1' && (
+              <div className="animate-slide-up">
+                <Phase1Section steps={steps.filter(s => s.phase === 'phase1')} completedSteps={completedSteps} toggleStep={toggleStep} />
+              </div>
             )}
 
-            {activeSection === 'phase3' && (
-              <Phase3Section steps={steps.filter(s => s.phase === 'phase3')} completedSteps={completedSteps} toggleStep={toggleStep} />
+            {activeTab === 'phase2' && (
+              <div className="animate-slide-up">
+                <Phase2Section steps={steps.filter(s => s.phase === 'phase2')} completedSteps={completedSteps} toggleStep={toggleStep} />
+              </div>
             )}
 
-            {activeSection === 'prompts' && (
-              <PromptsSection copyToClipboard={copyToClipboard} copiedPrompt={copiedPrompt} />
+            {activeTab === 'phase3' && (
+              <div className="animate-slide-up">
+                <Phase3Section steps={steps.filter(s => s.phase === 'phase3')} completedSteps={completedSteps} toggleStep={toggleStep} />
+              </div>
             )}
 
-            {activeSection === 'resources' && <ResourcesSection />}
+            {activeTab === 'prompts' && (
+              <div className="animate-slide-up">
+                <PromptsSection copyToClipboard={copyToClipboard} copiedPrompt={copiedPrompt} />
+              </div>
+            )}
+
+            {activeTab === 'resources' && (
+              <div className="animate-slide-up">
+                <ResourcesSection />
+              </div>
+            )}
           </div>
 
-          {/* Sidebar */}
-          <div className="col-span-12 lg:col-span-4">
-            <QuickInfoCard />
-            <ChecklistCard steps={steps} completedSteps={completedSteps} toggleStep={toggleStep} setActiveSection={setActiveSection} />
+          {/* Sidebar Stats */}
+          <div className="col-span-12 lg:col-span-4 space-y-6">
+            <div className="bg-white border-2 border-brand-black rounded-card p-6 sticky top-24">
+              <h3 className="font-bold text-lg mb-4">Module Details</h3>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <Clock className="w-5 h-5 text-gray-400" />
+                  <div>
+                    <p className="text-xs text-gray-500 font-bold uppercase">Time</p>
+                    <p className="font-bold">4-6 Hours</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Target className="w-5 h-5 text-gray-400" />
+                  <div>
+                    <p className="text-xs text-gray-500 font-bold uppercase">Difficulty</p>
+                    <p className="font-bold text-brand-orange">Intermediate</p>
+                  </div>
+                </div>
+              </div>
+
+              <hr className="my-6 border-gray-200" />
+
+              <button className="w-full py-3 bg-brand-black text-white font-bold rounded-lg hover:bg-gray-800 transition-colors">
+                Download Resources
+              </button>
+
+              <div className="mt-6 p-4 bg-gray-100 rounded-lg text-sm">
+                <p className="font-bold mb-2">Prerequisites:</p>
+                <ul className="list-disc list-inside text-gray-600">
+                  <li>Modules 1, 2, 3 Completed</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -421,50 +478,6 @@ const StepCheckbox = ({ step, completed, onToggle }) => (
     <span className={`flex-1 ${completed ? 'line-through text-gray-500' : 'font-medium'}`}>
       {step.title}
     </span>
-  </div>
-);
-
-const QuickInfoCard = () => (
-  <div className="bg-white border-2 border-brand-black rounded-card p-6 mb-6 sticky top-24">
-    <h3 className="font-bold text-lg mb-4">⏱️ Quick Info</h3>
-    <div className="space-y-3 text-sm">
-      <div className="flex justify-between">
-        <span className="text-gray-600">Time:</span>
-        <span className="font-bold">4-6 Hours</span>
-      </div>
-      <div className="flex justify-between">
-        <span className="text-gray-600">Difficulty:</span>
-        <span className="font-bold text-brand-orange">Intermediate</span>
-      </div>
-      <div className="flex justify-between">
-        <span className="text-gray-600">Prerequisites:</span>
-        <span className="font-bold">Modules 1, 2, 3</span>
-      </div>
-    </div>
-  </div>
-);
-
-const ChecklistCard = ({ steps, completedSteps, toggleStep, setActiveSection }) => (
-  <div className="bg-white border-2 border-brand-black rounded-card p-6">
-    <h3 className="font-bold text-lg mb-4">✅ Progress Checklist</h3>
-    <div className="space-y-2">
-      {steps.map(step => (
-        <div key={step.id} className="flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
-            checked={completedSteps.includes(step.id)}
-            onChange={() => toggleStep(step.id)}
-            className="w-4 h-4"
-          />
-          <button
-            onClick={() => setActiveSection(step.phase)}
-            className="text-left hover:underline"
-          >
-            {step.title}
-          </button>
-        </div>
-      ))}
-    </div>
   </div>
 );
 
