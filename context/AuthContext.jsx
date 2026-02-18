@@ -30,15 +30,47 @@ export const AuthProvider = ({ children }) => {
     const enhanceUserWithProgress = async (sessionUser) => {
         if (!sessionUser) return null;
 
-        // Map user_metadata to profile if needed
         const user = { ...sessionUser };
-        if (!user.profile && user.user_metadata) {
-            user.profile = { ...user.user_metadata };
-        } else if (!user.profile) {
-            user.profile = {};
+        user.profile = user.profile || {};
+
+        // 1. Try to fetch from 'profiles' table (Primary Source of Truth)
+        const { data: profileData, error } = await insforge
+            .from('profiles')
+            .select('*')
+            .eq('id', user.id)
+            .single();
+
+        if (profileData) {
+            user.profile = { ...user.profile, ...profileData };
+        } else {
+            // Lazy Migration: If no profile row exists for this user, create one from metadata
+            const initialProfile = {
+                id: user.id,
+                name: user.user_metadata?.name || '',
+                avatar_url: user.user_metadata?.avatar_url || '',
+                bio: user.user_metadata?.bio || '',
+                updated_at: new Date().toISOString()
+            };
+
+            // Fire and forget upsert to populate table
+            insforge.from('profiles').upsert(initialProfile).then(({ data }) => {
+                if (data) console.log('Created initial profile for user');
+            });
+
+            user.profile = { ...user.profile, ...initialProfile };
         }
 
-        // Fetch progress from DB
+        // 2. Restore from LocalStorage as backup/cache
+        try {
+            const localProfile = localStorage.getItem(`user_profile_${user.id}`);
+            if (localProfile) {
+                user.profile = { ...user.profile, ...JSON.parse(localProfile) };
+            }
+        } catch (e) {
+            console.warn('Failed to load local profile', e);
+        }
+
+        // 3. Fetch progress from DB
         const { data: progressData } = await getProgress();
         user.profile.progress = transformProgress(progressData);
 
@@ -70,7 +102,9 @@ export const AuthProvider = ({ children }) => {
         const { data, error } = await insforge.auth.signUp({
             email,
             password,
-            name,
+            options: {
+                data: { name } // Pass name to metadata for trigger to pick up
+            }
         });
 
         if (data?.session) {
@@ -106,18 +140,38 @@ export const AuthProvider = ({ children }) => {
     };
 
     const updateProfile = async (updates) => {
-        const { data, error } = await insforge.auth.setProfile(updates);
-        if (data) {
+        if (!user?.id) return { error: { message: "No user found" } };
+
+        // 1. Update 'profiles' table (True Persistence)
+        const { data, error } = await insforge
+            .from('profiles')
+            .upsert({
+                id: user.id,
+                ...updates,
+                updated_at: new Date().toISOString()
+            })
+            .select()
+            .single();
+
+        // 2. Update LocalStorage (Immediate UI feedback + offline support)
+        if (data || !error) {
+            // If we got data back, use it; otherwise use updates mixed with current profile
+            const newProfileData = data || { ...(user.profile || {}), ...updates };
+
+            localStorage.setItem(`user_profile_${user.id}`, JSON.stringify(newProfileData));
+
             setUser(prev => ({
                 ...prev,
                 profile: {
                     ...(prev?.profile || {}),
-                    ...updates,
-                    // Preserve progress which is not in the profile updates typically
-                    progress: prev?.profile?.progress || {}
+                    ...newProfileData
                 }
             }));
         }
+
+        // Optional: Attempt to sync generic auth metadata if needed, but profiles table is now primary
+        // await insforge.auth.updateUser({ data: updates }); 
+
         return { data, error };
     };
 
@@ -152,13 +206,12 @@ export const AuthProvider = ({ children }) => {
     const uploadProfilePic = async (file) => {
         const { data, error, publicUrl } = await uploadAvatar(file);
         if (publicUrl) {
-            setUser(prev => ({
-                ...prev,
-                profile: {
-                    ...(prev?.profile || {}), // Handle case where profile is initially null
-                    avatar_url: publicUrl
-                }
-            }));
+            // Use the new updateProfile function which persists to DB and LocalStorage
+            const { error: updateError } = await updateProfile({ avatar_url: publicUrl });
+
+            if (updateError) {
+                return { error: updateError };
+            }
         }
         return { data, error, publicUrl };
     };

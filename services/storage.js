@@ -21,10 +21,6 @@ export const uploadAvatar = async (file) => {
         .from('avatars')
         .getPublicUrl(filePath);
 
-    // 3. Update user profile
-    const { data, error: updateError } = await insforge.auth.setProfile({
-        avatar_url: publicUrl
-    });
-
-    return { data, error: updateError, publicUrl };
+    // 3. Return the URL so the caller can update the profile
+    return { data: null, error: null, publicUrl };
 };
